@@ -8,11 +8,11 @@ public class Restart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R)){
-            RestartGame();
-        }
+        
     }
-    public void RestartGame(){
+    public static void RestartGame(){
+        PlayerBehaviour.isDead = false;
+        TimeManager.instance.StopSlowmotion();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

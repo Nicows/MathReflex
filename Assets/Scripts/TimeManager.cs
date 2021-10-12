@@ -13,29 +13,37 @@ public class TimeManager : MonoBehaviour
     public MultipleGenerator multipleGenerator;
 
     public TMP_Text textCountDown;
+    public Slider sliderCountDown;
     public bool countdownEnable = false;
     public int startCountDownAt = 10;
     public int countDownTime;
     private int nextUpdate = 1;
 
-    private void Awake() {
-        if(instance == null)
+    private void Awake()
+    {
+        if (instance == null)
             instance = this;
-        else if(instance != this)
+        else if (instance != this)
             Destroy(gameObject);
     }
-    private void Start() {
-        
+    private void Start()
+    {
+        sliderCountDown.maxValue = startCountDownAt;
+        sliderCountDown.value = startCountDownAt;
     }
     private void Update()
     {
-        if(slowmotionEnable){
+        if (slowmotionEnable)
+        {
             if (Time.unscaledTime >= slowmotionTime)
             {
                 StopSlowmotion();
+                if(PlayerBehaviour.isDead) Restart.RestartGame();
             }
         }
-        if(countdownEnable){
+        if (countdownEnable)
+        {
+            sliderCountDown.value = ((float)countDownTime);
             if (Time.unscaledTime >= nextUpdate)
             {
                 // Change the next update (current second+1)
@@ -44,7 +52,7 @@ public class TimeManager : MonoBehaviour
             }
         }
     }
-
+    
     public void StartSlowmotion()
     {
         Time.timeScale = slowdownFactor;
@@ -52,27 +60,38 @@ public class TimeManager : MonoBehaviour
         slowmotionTime = Mathf.FloorToInt(Time.unscaledTime) + slowdownLength;
         slowmotionEnable = true;
     }
-    public void StopSlowmotion(){
+    public void StartSlowmotion(float slowdownFactor, float slowmotionLength = 10f)
+    {
+        Time.timeScale = slowdownFactor;
+        Time.fixedDeltaTime = Time.timeScale * .02f;
+        slowmotionTime = Mathf.FloorToInt(Time.unscaledTime) + slowmotionLength;
+        slowmotionEnable = true;
+    }
+    public void StopSlowmotion()
+    {
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.deltaTime;
         slowmotionEnable = false;
     }
-    public void CountDown(){
-        
+    public void CountDown()
+    {
         if (countDownTime > 0)
         {
             countDownTime -= 1;
+            sliderCountDown.value = countDownTime;
             textCountDown.SetText(countDownTime.ToString());
-        }      
+        }
     }
-    public void StartCountdown(){
+    public void StartCountdown()
+    {
         countdownEnable = true;
         countDownTime = startCountDownAt;
         textCountDown.SetText(countDownTime.ToString());
     }
-    public void StopCountdown(){
+    public void StopCountdown()
+    {
         countdownEnable = false;
-        countDownTime = startCountDownAt;
-        textCountDown.SetText(countDownTime.ToString());
+        textCountDown.SetText(startCountDownAt.ToString());
+        sliderCountDown.value = startCountDownAt;
     }
 }

@@ -20,7 +20,6 @@ public class MultipleGenerator : MonoBehaviour
     public TMP_Text textScore;
     public int score = 0;
     public OpenDoor openDoor;
-    public TimeManager timeManager;
 
     void Start()
     {
@@ -30,9 +29,9 @@ public class MultipleGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    
+
     public void GetNumbers()
     {
         firstNumber = Random.Range(1, 10);
@@ -47,7 +46,8 @@ public class MultipleGenerator : MonoBehaviour
 
         DisplayResult();
     }
-    public void EnableButtons(bool enable){
+    public void EnableButtons(bool enable)
+    {
         buttonReponse1.enabled = enable;
         buttonReponse2.enabled = enable;
         buttonReponse3.enabled = enable;
@@ -72,26 +72,24 @@ public class MultipleGenerator : MonoBehaviour
         buttonReponse3.GetComponentInChildren<TMP_Text>().SetText(myList[2].ToString());
     }
 
-    public void CheckResult(Button button){
+    public void CheckResult(Button button)
+    {
         int resultChosen = int.Parse(button.GetComponentInChildren<TMP_Text>().text);
-        
+        CameraShake.Instance.ShakeCamera(2f, 0.05f);
+        TimeManager.instance.StopSlowmotion();
+        TimeManager.instance.StopCountdown();
+
         if (resultChosen == result)
         {
-            Debug.Log("Bon résultat");
-            CameraShake.Instance.ShakeCamera(2f, 0.05f);
             openDoor.OpenTheDoor();
-            score++;
-            textScore.SetText("Score : " + score);
-            timeManager.StopSlowmotion();
-            timeManager.StopCountdown();
+            AddScore(1);
         }
-        else {
-            Debug.Log("Mauvais resultat");
-            timeManager.StopSlowmotion();
-            timeManager.StopCountdown();
-            openDoor.gameObject.SetActive(false);
-        }
-        
+    }
+    
+    public void AddScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        textScore.SetText("Score : " + score);
     }
 
 }

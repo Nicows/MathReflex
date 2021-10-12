@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<languages>
+    <language>
+        <name>Français</name>
+        <play>Jouer</play>
+        <settings>Paramètres</settings>
+        <characters>Personnages</characters>
+    </language>
+    <language>
+        <name>English</name>
+        <play>Play</play>
+        <settings>Settings</settings>
+        <characters>Characters</characters>
+    </language>
+</languages>

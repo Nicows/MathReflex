@@ -15,5 +15,6 @@ public class TriggerSlowMotion : MonoBehaviour
         multipleGenerator.GetNumbers();
         timeManager.StartCountdown();
         timeManager.StartSlowmotion();
+        gameObject.SetActive(false);
     }
 }
