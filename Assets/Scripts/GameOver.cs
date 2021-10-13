@@ -8,23 +8,24 @@ public class GameOver : MonoBehaviour
     public GameObject gameOverPanel;
 
     public void PlayerIsDead(){
-        
-        int score = ScoreManager.score;
-        textScore.text = "Score : " + score;
-        PlayerPrefs.SetInt("CurrentScore", score);
-        if(score > PlayerPrefs.GetInt("HighScore", 0)){
-            PlayerPrefs.SetInt("HighScore", score);
-        }
-
+        ScoreManager.CalculateHighScore();
+        textScore.text = "Score : " + ScoreManager.score;
         gameOverPanel.SetActive(true);
         TimeManager.instance.StartSlowmotion(0.01f, 15f);
     }
-
-    public void RestartGame(){
-        PlayerPrefs.SetInt("CurrentScore", 0);
+    public static void ResetGame(){
+        
         ScoreManager.ResetScore();
         PlayerBehaviour.isDead = false;
         TimeManager.instance.StopSlowmotion();
+    }
+
+    public void RestartGame(){
+        ResetGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public static void ReturnToMenu(){
+       ResetGame();
+       SceneManager.LoadScene("MainMenu");
     }
 }

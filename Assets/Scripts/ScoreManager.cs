@@ -11,11 +11,11 @@ public class ScoreManager : MonoBehaviour
     public int scoreMultiplier = 1;
 
     private void Awake() {
-        PlayerPrefs.SetString("CurrentDifficulty", "Hard");
-        currentDifficulty = PlayerPrefs.GetString("CurrentDifficulty", "Easy");
+        currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
 
         switch (currentDifficulty)
         {
+            case "Facile":
             case "Easy":
             scoreMultiplier = 1;
             break;
@@ -24,6 +24,7 @@ public class ScoreManager : MonoBehaviour
             scoreMultiplier = 3;
             break;
 
+            case "Difficile":
             case "Hard":
             scoreMultiplier = 5;
             break;
@@ -33,11 +34,18 @@ public class ScoreManager : MonoBehaviour
     }
     public void AddScore()
     {
-        
         score += 1 * scoreMultiplier;
         textScore.SetText("Score : " + score);
     }
     public static void ResetScore(){
+        PlayerPrefs.SetInt("CurrentScore", 0);
         score = 0;
+    }
+    public static void CalculateHighScore(){
+        string difficulty = PlayerPrefs.GetString("Difficulty","Easy");
+        PlayerPrefs.SetInt("CurrentScore", score);
+        if(score > PlayerPrefs.GetInt("HighScore_"+difficulty, 0)){
+            PlayerPrefs.SetInt("HighScore_"+difficulty, score);
+        }
     }
 }

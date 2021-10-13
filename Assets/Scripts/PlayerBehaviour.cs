@@ -23,7 +23,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (isDead == false)
         {
-            checkInput();
+            // checkInput();
             Translate();
         }
     }
@@ -47,15 +47,13 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Collision");
         if (other.collider.gameObject.tag == "Porte")
         {
-            Debug.Log("Porte");
             gameOver.PlayerIsDead();
             isDead = true;
             rb.constraints = RigidbodyConstraints2D.None;
-            rb.AddForce(new Vector2(-rb.position.x , 10f), ForceMode2D.Force);
-            rb.AddTorque(3f);
+            rb.AddForce(new Vector2(-moveSpeed, moveSpeed), ForceMode2D.Impulse);
+            rb.AddTorque(30f, ForceMode2D.Impulse);
         }
     }
 }

@@ -41,7 +41,7 @@ public class TimeManager : MonoBehaviour
                 {
                     StopSlowmotion();
                     if(PlayerBehaviour.isDead) {
-                        SceneManager.LoadScene("MainMenu");
+                        GameOver.ReturnToMenu();
                     }
                 }
             }
