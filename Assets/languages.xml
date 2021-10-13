@@ -6,11 +6,25 @@
         <play>Jouer</play>
         <settings>Paramètres</settings>
         <characters>Personnages</characters>
+        <restart>Appuie pour recommencer</restart>
+        <restart_ad>Regarde une pub pour recommencer avec ton score</restart_ad>
+        <highscore>Meilleur score</highscore>
+        <easy>Facile</easy>
+        <normal>Normal</normal>
+        <hard>Difficile</hard>
+        <difficulty>difficulté</difficulty>
     </language>
     <language>
         <name>English</name>
         <play>Play</play>
         <settings>Settings</settings>
         <characters>Characters</characters>
+        <restart>Clic to restart</restart>
+        <restart_ad>Watch ad to resume with your score</restart_ad>
+        <highscore>HighScore</highscore>
+        <easy>Easy</easy>
+        <normal>Normal</normal>
+        <hard>Hard</hard>
+        <difficulty>difficulté</difficulty>
     </language>
 </languages>

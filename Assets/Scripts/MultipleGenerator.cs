@@ -16,9 +16,9 @@ public class MultipleGenerator : MonoBehaviour
     public Button buttonReponse1;
     public Button buttonReponse2;
     public Button buttonReponse3;
+    public GameObject buttonGroup;
 
-    public TMP_Text textScore;
-    public int score = 0;
+    public ScoreManager scoreManager;
     public OpenDoor openDoor;
 
     void Start()
@@ -43,15 +43,10 @@ public class MultipleGenerator : MonoBehaviour
             falseResult1 = 0;
         }
         falseResult2 = result + Random.Range(1, 5);
-
+        EnableButtons(true);
         DisplayResult();
     }
-    public void EnableButtons(bool enable)
-    {
-        buttonReponse1.enabled = enable;
-        buttonReponse2.enabled = enable;
-        buttonReponse3.enabled = enable;
-    }
+    
     public void DisplayResult()
     {
         List<int> myList = new List<int>() { falseResult1, result, falseResult2 };
@@ -74,6 +69,8 @@ public class MultipleGenerator : MonoBehaviour
 
     public void CheckResult(Button button)
     {
+        EnableButtons(false);
+
         int resultChosen = int.Parse(button.GetComponentInChildren<TMP_Text>().text);
         CameraShake.Instance.ShakeCamera(2f, 0.05f);
         TimeManager.instance.StopSlowmotion();
@@ -82,14 +79,14 @@ public class MultipleGenerator : MonoBehaviour
         if (resultChosen == result)
         {
             openDoor.OpenTheDoor();
-            AddScore(1);
+            scoreManager.AddScore();
         }
     }
     
-    public void AddScore(int scoreToAdd)
+    public void EnableButtons(bool enable)
     {
-        score += scoreToAdd;
-        textScore.SetText("Score : " + score);
+        buttonGroup.SetActive(enable);
     }
+    
 
 }

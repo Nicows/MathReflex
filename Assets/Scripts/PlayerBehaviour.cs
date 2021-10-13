@@ -6,20 +6,18 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Camera cam;
+    public GameOver gameOver;
 
     public float moveSpeed = 10f;
     public bool canMove = false;
     public float maxSpeed = 20f;
     public bool hasChosen = false;
 
-    Vector2 mousePos;
-
-    public GameObject gameOver;
     public static bool isDead = false;
 
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        
     }
     void Update()
     {
@@ -49,14 +47,15 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
+        Debug.Log("Collision");
         if (other.collider.gameObject.tag == "Porte")
         {
-            gameOver.SetActive(true);
+            Debug.Log("Porte");
+            gameOver.PlayerIsDead();
             isDead = true;
             rb.constraints = RigidbodyConstraints2D.None;
             rb.AddForce(new Vector2(-rb.position.x , 10f), ForceMode2D.Force);
             rb.AddTorque(3f);
-            TimeManager.instance.StartSlowmotion(0.01f, 5f);
         }
     }
 }

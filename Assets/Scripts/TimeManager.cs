@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour
 {
@@ -33,22 +34,26 @@ public class TimeManager : MonoBehaviour
     }
     private void Update()
     {
-        if (slowmotionEnable)
-        {
-            if (Time.unscaledTime >= slowmotionTime)
+        if(PauseMenu.GameIsPaused == false){
+            if (slowmotionEnable)
             {
-                StopSlowmotion();
-                if(PlayerBehaviour.isDead) Restart.RestartGame();
+                if (Time.unscaledTime >= slowmotionTime)
+                {
+                    StopSlowmotion();
+                    if(PlayerBehaviour.isDead) {
+                        SceneManager.LoadScene("MainMenu");
+                    }
+                }
             }
-        }
-        if (countdownEnable)
-        {
-            sliderCountDown.value = ((float)countDownTime);
-            if (Time.unscaledTime >= nextUpdate)
+            if (countdownEnable)
             {
-                // Change the next update (current second+1)
-                nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + 1;
-                CountDown();
+                sliderCountDown.value = ((float)countDownTime);
+                if (Time.unscaledTime >= nextUpdate)
+                {
+                    // Change the next update (current second+1)
+                    nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + 1;
+                    CountDown();
+                }
             }
         }
     }
@@ -79,6 +84,7 @@ public class TimeManager : MonoBehaviour
         {
             countDownTime -= 1;
             sliderCountDown.value = countDownTime;
+            SliderRed();
             textCountDown.SetText(countDownTime.ToString());
         }
     }
@@ -93,5 +99,12 @@ public class TimeManager : MonoBehaviour
         countdownEnable = false;
         textCountDown.SetText(startCountDownAt.ToString());
         sliderCountDown.value = startCountDownAt;
+        SliderGreen();
+    }
+    public void SliderGreen(){
+        sliderCountDown.GetComponentInChildren<Image>().color = Color.green;
+    }
+    public void SliderRed(){
+        sliderCountDown.GetComponentInChildren<Image>().color = Color.red;
     }
 }
