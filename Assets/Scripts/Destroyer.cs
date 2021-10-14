@@ -9,7 +9,8 @@ public class Destroyer : MonoBehaviour
 
     void Start()
     {
-        Destroy(gameObject, lifetime);
+        if(LevelGenerator.isALevelInfinite)
+            Destroy(gameObject, lifetime);
     }
 
     // Update is called once per frame

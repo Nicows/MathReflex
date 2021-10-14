@@ -45,10 +45,11 @@ public class MenuInteraction : MonoBehaviour
         panelPlay.SetActive(true);
     }
     public void SelectLevel(TMP_Text level){
-
+        PlayerPrefs.SetInt("Level",int.Parse(level.text));
+        StartGame();
     }
     public void SelectInfini(){
-
+        PlayerPrefs.SetInt("Level",0);
         StartGame();
     }
     public void OpenPlayButton(Animator animator){

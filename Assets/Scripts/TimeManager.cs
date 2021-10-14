@@ -26,6 +26,30 @@ public class TimeManager : MonoBehaviour
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+
+        string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
+
+        switch (currentDifficulty)
+        {
+            case "Facile":
+            case "Easy":
+                startCountDownAt = 10;
+                slowdownLength = 10;
+                break;
+
+            case "Normal":
+                startCountDownAt = 6;
+                slowdownLength = 6;
+                break;
+
+            case "Difficile":
+            case "Hard":
+                startCountDownAt = 3;
+                slowdownLength = 3;
+                break;
+
+            default: break;
+        }
     }
     private void Start()
     {
@@ -34,30 +58,31 @@ public class TimeManager : MonoBehaviour
     }
     private void Update()
     {
-        if(PauseMenu.GameIsPaused == false){
-            if (slowmotionEnable)
+
+        if (slowmotionEnable)
+        {
+            if (Time.unscaledTime >= slowmotionTime)
             {
-                if (Time.unscaledTime >= slowmotionTime)
+                StopSlowmotion();
+                if (PlayerBehaviour.isDead)
                 {
-                    StopSlowmotion();
-                    if(PlayerBehaviour.isDead) {
-                        GameOver.ReturnToMenu();
-                    }
-                }
-            }
-            if (countdownEnable)
-            {
-                sliderCountDown.value = ((float)countDownTime);
-                if (Time.unscaledTime >= nextUpdate)
-                {
-                    // Change the next update (current second+1)
-                    nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + 1;
-                    CountDown();
+                    GameOver.ReturnToMenu();
                 }
             }
         }
+        if (countdownEnable)
+        {
+            sliderCountDown.value = ((float)countDownTime);
+            if (Time.unscaledTime >= nextUpdate)
+            {
+                // Change the next update (current second+1)
+                nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + 1;
+                CountDown();
+            }
+        }
+
     }
-    
+
     public void StartSlowmotion()
     {
         Time.timeScale = slowdownFactor;
@@ -84,8 +109,8 @@ public class TimeManager : MonoBehaviour
         {
             countDownTime -= 1;
             sliderCountDown.value = countDownTime;
-            SliderRed();
             textCountDown.SetText(countDownTime.ToString());
+            SliderRed();
         }
     }
     public void StartCountdown()
@@ -101,10 +126,12 @@ public class TimeManager : MonoBehaviour
         sliderCountDown.value = startCountDownAt;
         SliderGreen();
     }
-    public void SliderGreen(){
+    public void SliderGreen()
+    {
         sliderCountDown.GetComponentInChildren<Image>().color = Color.green;
     }
-    public void SliderRed(){
+    public void SliderRed()
+    {
         sliderCountDown.GetComponentInChildren<Image>().color = Color.red;
     }
 }

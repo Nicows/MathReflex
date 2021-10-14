@@ -21,9 +21,11 @@ public class MultipleGenerator : MonoBehaviour
     public ScoreManager scoreManager;
     public OpenDoor openDoor;
 
-    void Start()
-    {
+    public static int multiplicationTableOf; //0 for infinite
+    public int numberForMultiplicationTable = 1;
 
+    private void Awake() {
+        multiplicationTableOf = PlayerPrefs.GetInt("Level", 0); //0 for infinite
     }
 
     // Update is called once per frame
@@ -33,9 +35,14 @@ public class MultipleGenerator : MonoBehaviour
     }
 
     public void GetNumbers()
-    {
-        firstNumber = Random.Range(1, 10);
-        secondNumber = Random.Range(1, 10);
+    {   
+        if(multiplicationTableOf == 0){
+            firstNumber = Random.Range(1, 10);
+            secondNumber = Random.Range(1, 10);
+        }else{
+            firstNumber = multiplicationTableOf;
+            secondNumber = numberForMultiplicationTable;  
+        }
         result = firstNumber * secondNumber;
         falseResult1 = result - Random.Range(1, 5);
         if (falseResult1 < 0)
@@ -45,6 +52,11 @@ public class MultipleGenerator : MonoBehaviour
         falseResult2 = result + Random.Range(1, 5);
         EnableButtons(true);
         DisplayResult();
+        
+        if(multiplicationTableOf != 0){
+            numberForMultiplicationTable++;
+        }
+        
     }
     
     public void DisplayResult()
