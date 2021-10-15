@@ -17,8 +17,9 @@ public class TimeManager : MonoBehaviour
     public Slider sliderCountDown;
     public bool countdownEnable = false;
     public int startCountDownAt = 10;
-    public int countDownTime;
-    private int nextUpdate = 1;
+    public float countDownTime;
+    private float nextUpdate = 1;
+    private float frequenceUpdate = 1f;
 
     private void Awake()
     {
@@ -48,13 +49,18 @@ public class TimeManager : MonoBehaviour
                 slowdownLength = 3;
                 break;
 
-            default: break;
+            default:
+                startCountDownAt = 10;
+                slowdownLength = 10;
+                break;
         }
     }
     private void Start()
     {
         sliderCountDown.maxValue = startCountDownAt;
-        sliderCountDown.value = startCountDownAt;
+        sliderCountDown.GetComponentInChildren<Image>().color = ColorManager.colorDifficulty;
+        sliderCountDown.gameObject.SetActive(false);
+        nextUpdate = frequenceUpdate;
     }
     private void Update()
     {
@@ -76,7 +82,7 @@ public class TimeManager : MonoBehaviour
             if (Time.unscaledTime >= nextUpdate)
             {
                 // Change the next update (current second+1)
-                nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + 1;
+                nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + frequenceUpdate;
                 CountDown();
             }
         }
@@ -107,31 +113,25 @@ public class TimeManager : MonoBehaviour
     {
         if (countDownTime > 0)
         {
-            countDownTime -= 1;
+            countDownTime -= frequenceUpdate;
             sliderCountDown.value = countDownTime;
             textCountDown.SetText(countDownTime.ToString());
-            SliderRed();
         }
     }
     public void StartCountdown()
     {
         countdownEnable = true;
         countDownTime = startCountDownAt;
+        textCountDown.gameObject.SetActive(true);
         textCountDown.SetText(countDownTime.ToString());
+        sliderCountDown.gameObject.SetActive(true);
     }
     public void StopCountdown()
     {
         countdownEnable = false;
         textCountDown.SetText(startCountDownAt.ToString());
         sliderCountDown.value = startCountDownAt;
-        SliderGreen();
-    }
-    public void SliderGreen()
-    {
-        sliderCountDown.GetComponentInChildren<Image>().color = Color.green;
-    }
-    public void SliderRed()
-    {
-        sliderCountDown.GetComponentInChildren<Image>().color = Color.red;
+        textCountDown.gameObject.SetActive(false);
+       sliderCountDown.gameObject.SetActive(false);
     }
 }

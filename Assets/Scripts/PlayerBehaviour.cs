@@ -7,18 +7,13 @@ public class PlayerBehaviour : MonoBehaviour
     public Rigidbody2D rb;
     public Camera cam;
     public GameOver gameOver;
+    public EndLevel endLevel;
 
     public float moveSpeed = 10f;
-    public bool canMove = false;
     public float maxSpeed = 20f;
-    public bool hasChosen = false;
 
     public static bool isDead = false;
 
-    void Start()
-    {
-        
-    }
     void Update()
     {
         if (isDead == false)
@@ -54,6 +49,14 @@ public class PlayerBehaviour : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.None;
             rb.AddForce(new Vector2(-moveSpeed, moveSpeed), ForceMode2D.Impulse);
             rb.AddTorque(30f, ForceMode2D.Impulse);
+            // CameraShake.Instance.ShakeCamera(3f, 0.2f);
         }
     }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.tag == "EndLevel"){
+            moveSpeed = 1f;
+            endLevel.FinishedLevel();
+        }
+    }
+    
 }

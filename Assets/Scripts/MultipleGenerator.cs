@@ -84,14 +84,15 @@ public class MultipleGenerator : MonoBehaviour
         EnableButtons(false);
 
         int resultChosen = int.Parse(button.GetComponentInChildren<TMP_Text>().text);
-        CameraShake.Instance.ShakeCamera(2f, 0.05f);
+        CameraShake.Instance.ShakeCamera(5f, 0.1f);
         TimeManager.instance.StopSlowmotion();
         TimeManager.instance.StopCountdown();
 
         if (resultChosen == result)
         {
             openDoor.OpenTheDoor();
-            scoreManager.AddScore();
+            if(LevelGenerator.isALevelInfinite)
+                scoreManager.AddScore();
         }
     }
     

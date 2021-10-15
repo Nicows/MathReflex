@@ -27,13 +27,14 @@ public class OpenDoor : MonoBehaviour
     public Transform getClosestDoor(){
         
         doors = GameObject.FindGameObjectsWithTag("Porte");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         float closestDistance = Mathf.Infinity;
         Transform trans = null;
 
         foreach (GameObject go in doors)
         {
             float currentDistance;
-            currentDistance = Vector3.Distance(transform.position, go.transform.position);
+            currentDistance = Vector3.Distance(player.transform.position, go.transform.position);
             if(currentDistance < closestDistance){
                 closestDistance = currentDistance;
                 trans = go.transform;
@@ -45,13 +46,5 @@ public class OpenDoor : MonoBehaviour
     {
         // closestDoor.GetComponentInChildren<ParticleSystem>().Play();
         closestDoor.GetComponent<Animator>().Play("PorteOpen");
-        // closestDoor.transform.position = Vector2.MoveTowards(closestDoor.transform.position, new Vector2(closestDoor.transform.position.x,-5f),5f);
-    }
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.collider.gameObject.tag == "Player")
-        {
-            CameraShake.Instance.ShakeCamera(3f, 0.2f);
-        }
     }
 }

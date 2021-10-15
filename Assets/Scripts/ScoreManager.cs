@@ -6,46 +6,82 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public TMP_Text textScore;
+    public TMP_Text textCombo;
     public string currentDifficulty;
     public static int score = 0;
     public int scoreMultiplier = 1;
+    public int combo = 0;
+    public int comboDifficulty;
+    public int nextCombo = 5;
 
-    private void Awake() {
+    private void Start()
+    {
         currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
 
         switch (currentDifficulty)
         {
             case "Facile":
             case "Easy":
-            scoreMultiplier = 1;
-            break;
+                scoreMultiplier = 1;
+                comboDifficulty = 1;
+                break;
 
             case "Normal":
-            scoreMultiplier = 3;
-            break;
+                scoreMultiplier = 3;
+                comboDifficulty = 3;
+                break;
 
             case "Difficile":
             case "Hard":
-            scoreMultiplier = 5;
-            break;
+                scoreMultiplier = 5;
+                comboDifficulty = 5;
+                break;
 
-            default:break;
+            default: break;
         }
+        textScore.text = PlayerPrefs.GetInt("CurrentScore", 0).ToString();
+        textCombo.text = "x" + scoreMultiplier;
+
+        if (LevelGenerator.isALevelInfinite == false)
+        {
+            textScore.gameObject.SetActive(false);
+            textCombo.gameObject.SetActive(false);
+        }
+        else
+        {
+            textScore.gameObject.SetActive(false);
+            textCombo.gameObject.SetActive(false);
+        }
+
     }
     public void AddScore()
     {
         score += 1 * scoreMultiplier;
-        textScore.SetText("Score : " + score);
+        textScore.SetText(score.ToString());
+        Combo();
     }
-    public static void ResetScore(){
+    public static void ResetScore()
+    {
         PlayerPrefs.SetInt("CurrentScore", 0);
         score = 0;
     }
-    public static void CalculateHighScore(){
-        string difficulty = PlayerPrefs.GetString("Difficulty","Easy");
+    public static void CalculateHighScore()
+    {
+        string difficulty = PlayerPrefs.GetString("Difficulty", "Easy");
         PlayerPrefs.SetInt("CurrentScore", score);
-        if(score > PlayerPrefs.GetInt("HighScore_"+difficulty, 0)){
-            PlayerPrefs.SetInt("HighScore_"+difficulty, score);
+        if (score > PlayerPrefs.GetInt("HighScore_" + difficulty, 0))
+        {
+            PlayerPrefs.SetInt("HighScore_" + difficulty, score);
         }
+    }
+    public void Combo()
+    {
+        combo++;
+        if (combo >= nextCombo)
+        {
+            scoreMultiplier += comboDifficulty;
+            nextCombo = combo + 5;
+        }
+        textCombo.text = "x" + scoreMultiplier;
     }
 }

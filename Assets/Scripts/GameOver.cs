@@ -5,17 +5,22 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
     public TMP_Text textScore;
+    public TMP_Text textScoreNumber;
     public GameObject gameOverPanel;
 
     public void PlayerIsDead(){
-        ScoreManager.CalculateHighScore();
-        textScore.text = "Score : " + ScoreManager.score;
+        if(LevelGenerator.isALevelInfinite){
+            ScoreManager.CalculateHighScore();  
+            textScoreNumber.text = "Score : " + ScoreManager.score;
+            textScore.gameObject.SetActive(true);
+            textScoreNumber.gameObject.SetActive(true);
+        }
         gameOverPanel.SetActive(true);
         TimeManager.instance.StartSlowmotion(0.01f, 15f);
     }
     public static void ResetGame(){
         
-        ScoreManager.ResetScore();
+        if(LevelGenerator.isALevelInfinite) ScoreManager.ResetScore();
         PlayerBehaviour.isDead = false;
         TimeManager.instance.StopSlowmotion();
     }

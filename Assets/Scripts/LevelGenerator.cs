@@ -14,9 +14,9 @@ public class LevelGenerator : MonoBehaviour
     private Vector3 lastEndPosition;
     public static bool isALevelInfinite = true;
 
-    private void Awake()
+    private void Start()
     {
-        if(PlayerPrefs.GetInt("Level", 0) == 0)isALevelInfinite = true;
+        if(PlayerPrefs.GetInt("Level", 0) == 0) isALevelInfinite = true;
         else isALevelInfinite = false;
         
         lastEndPosition = level_Start.Find("EndPosition").position;
@@ -27,6 +27,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 SpawnLevelPart();
                 if(i == 9) SpawnEndLevel(lastEndPosition);
+                ColorManager.RefreshColor();
             }
         }
         else
@@ -43,6 +44,7 @@ public class LevelGenerator : MonoBehaviour
             if (Vector3.Distance(player.position, lastEndPosition) < PLAYER_DISTANCE_SPAWN_LEVEL_PART)
             {
                 SpawnLevelPart();
+                ColorManager.RefreshColor();
             }
         }
     }
