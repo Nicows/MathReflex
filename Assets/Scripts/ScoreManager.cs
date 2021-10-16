@@ -39,13 +39,14 @@ public class ScoreManager : MonoBehaviour
 
             default: break;
         }
-        textScore.text = PlayerPrefs.GetInt("CurrentScore", 0).ToString();
-        textCombo.text = "x" + scoreMultiplier;
+        
 
-        if (LevelGenerator.isALevelInfinite == false)
+        if (LevelGenerator.isALevelInfinite)
         {
-            textScore.gameObject.SetActive(false);
-            textCombo.gameObject.SetActive(false);
+            textScore.gameObject.SetActive(true);
+            textCombo.gameObject.SetActive(true);
+            textScore.text = PlayerPrefs.GetInt("CurrentScore", 0).ToString();
+            textCombo.text = "x" + scoreMultiplier;
         }
         else
         {

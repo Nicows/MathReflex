@@ -49,7 +49,7 @@ public class PlayerBehaviour : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.None;
             rb.AddForce(new Vector2(-moveSpeed, moveSpeed), ForceMode2D.Impulse);
             rb.AddTorque(30f, ForceMode2D.Impulse);
-            // CameraShake.Instance.ShakeCamera(3f, 0.2f);
+            // CameraShake.Instance.ShakeCamera(1f, 0.2f);
         }
     }
     private void OnTriggerEnter2D(Collider2D other) {

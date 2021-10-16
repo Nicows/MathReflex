@@ -9,6 +9,27 @@ public class Destroyer : MonoBehaviour
 
     void Start()
     {
+        string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
+
+        switch (currentDifficulty)
+        {
+            case "Facile":
+            case "Easy":
+                lifetime = 15;
+                break;
+
+            case "Normal":
+                lifetime = 10;
+                break;
+
+            case "Difficile":
+            case "Hard":
+                lifetime = 6;
+                break;
+
+            default: break;
+        }
+
         if(LevelGenerator.isALevelInfinite)
             Destroy(gameObject, lifetime);
     }

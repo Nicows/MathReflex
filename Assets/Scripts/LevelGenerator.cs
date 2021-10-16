@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    private const float PLAYER_DISTANCE_SPAWN_LEVEL_PART = 13f;
+    private const float PLAYER_DISTANCE_SPAWN_LEVEL_PART = 20f;
 
     [SerializeField] private Transform level_Start;
     [SerializeField] private Transform level;
@@ -12,12 +12,13 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Transform EndLevel;
 
     private Vector3 lastEndPosition;
-    public static bool isALevelInfinite = true;
-
-    private void Start()
-    {
+    public static bool isALevelInfinite = false;
+    private void Awake() {
         if(PlayerPrefs.GetInt("Level", 0) == 0) isALevelInfinite = true;
         else isALevelInfinite = false;
+    }
+    private void Start()
+    {
         
         lastEndPosition = level_Start.Find("EndPosition").position;
 
@@ -33,6 +34,7 @@ public class LevelGenerator : MonoBehaviour
         else
         {
             SpawnLevelPart();
+            ColorManager.RefreshColor();
         }
 
     }

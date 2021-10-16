@@ -7,28 +7,7 @@ public class ColorManager : MonoBehaviour
     private void Start()
     {
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-
-        switch (currentDifficulty)
-        {
-            case "Facile":
-            case "Easy":
-                colorDifficulty = GetColor("green");
-                break;
-
-            case "Normal":
-                colorDifficulty = GetColor("blue");
-                break;
-
-            case "Difficile":
-            case "Hard":
-                colorDifficulty = GetColor("red");
-                break;
-
-            default:
-                colorDifficulty = GetColor("green");
-                break;
-        }
-
+        colorDifficulty = GetColor(currentDifficulty);
         RefreshColor();
     }
 
@@ -40,19 +19,34 @@ public class ColorManager : MonoBehaviour
         switch (colorString)
         {
             case "green":
-                colorHex = "#54FBC8";
+                colorHex = "#6EC6BA";
                 break;
             case "blue":
                 colorHex = "#55C5FA";
                 break;
             case "red":
-                colorHex = "#EF3829";
+                colorHex = "#DD3829";
                 break;
-            case "levelFinished":
-                colorHex = "#008080";
+            case "Easy":
+                colorHex = "#6EC6BA";
+                break;
+            case "Normal":
+                colorHex = "#55C5FA";
+                break;
+            case "Hard":
+                colorHex = "#DD3829";
+                break;
+            case "EasyCompleted":
+                colorHex = "#6E9BBA";
+                break;
+            case "NormalCompleted":
+                colorHex = "#3F8EB3";
+                break;
+            case "HardCompleted":
+                colorHex = "#A42318";
                 break;
             default:
-                colorHex = "#54FBC8";
+                colorHex = "#6EC6BA";
                 break;
         }
 

@@ -6,8 +6,8 @@
         <play>Jouer</play>
         <settings>Paramètres</settings>
         <characters>Avatars</characters>
-        <restart>Appuyer pour recommencer</restart>
-        <restart_ad>Regarde une pub pour recommencer avec ton score</restart_ad>
+        <restart>Recommencer</restart>
+        <restart_ad>Continuer</restart_ad>
         <highscore>Meilleur score</highscore>
         <easy>Lent</easy>
         <normal>Normal</normal>
@@ -20,13 +20,13 @@
         <play>Play</play>
         <settings>Settings</settings>
         <characters>Characters</characters>
-        <restart>Clic to restart</restart>
-        <restart_ad>Watch ad to resume with your score</restart_ad>
+        <restart>Restart</restart>
+        <restart_ad>Continue</restart_ad>
         <highscore>High score</highscore>
         <easy>Slow</easy>
         <normal>Normal</normal>
         <hard>Fast</hard>
-        <tables>multiplication tables</tables>
+        <tables>Multiplication tables</tables>
         <shop>Shop</shop>
     </language>
 </languages>

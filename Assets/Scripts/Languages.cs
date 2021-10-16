@@ -42,6 +42,8 @@ public class Languages : MonoBehaviour
     public TMP_Text textShop;
     private string shop;
 
+    public static string ad;
+
     private void Awake()
     {
         Reader();
@@ -62,6 +64,7 @@ public class Languages : MonoBehaviour
         languages[currentLanguage].TryGetValue("highscore", out highScore);
         languages[currentLanguage].TryGetValue("tables", out multiplTable);
         languages[currentLanguage].TryGetValue("shop", out shop);
+        languages[currentLanguage].TryGetValue("restart_ad", out ad);
 
     }
     private void DisplayText()

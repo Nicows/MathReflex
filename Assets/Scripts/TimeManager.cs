@@ -10,7 +10,7 @@ public class TimeManager : MonoBehaviour
     public bool slowmotionEnable = false;
     public float slowmotionTime;
 
-    public static TimeManager instance;
+    public static TimeManager instance { get; private set;}
     public MultipleGenerator multipleGenerator;
 
     public TMP_Text textCountDown;
@@ -25,9 +25,11 @@ public class TimeManager : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
+        else Destroy(gameObject);
 
+    }
+    private void Start()
+    {
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
 
         switch (currentDifficulty)
@@ -54,9 +56,7 @@ public class TimeManager : MonoBehaviour
                 slowdownLength = 10;
                 break;
         }
-    }
-    private void Start()
-    {
+        
         sliderCountDown.maxValue = startCountDownAt;
         sliderCountDown.GetComponentInChildren<Image>().color = ColorManager.colorDifficulty;
         sliderCountDown.gameObject.SetActive(false);

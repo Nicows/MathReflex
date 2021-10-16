@@ -9,13 +9,20 @@ public class MenuInteraction : MonoBehaviour
 {
     public TMP_Text difficultyTitle;
     public GameObject panelPlay;
-    public GameObject[] groupLevels ;
+    public GameObject groupLevels;
+    public List<GameObject> listLevels;
+    public GameObject infiniLevel;
 
     public GameObject groupHighScore;
     public TMP_Text scoreSlow;
     public TMP_Text scoreNormal;
     public TMP_Text scoreFast;
-    
+    private void Start() {
+        foreach (Transform level in groupLevels.transform)
+        {
+            listLevels.Add(level.gameObject);
+        }
+    }
     public void StartGame()
     {
         SceneManager.LoadScene(1); //1 for MainScene (the run)
@@ -49,13 +56,16 @@ public class MenuInteraction : MonoBehaviour
         
         PlayerPrefs.SetString("Difficulty", difficultyname);
 
-        foreach (GameObject level in groupLevels)
+        foreach (GameObject level in listLevels)
         {
             int levelNumber = int.Parse(level.GetComponentInChildren<TMP_Text>().text);
             int levelCompleted = PlayerPrefs.GetInt("Completed_"+difficultyname+"_"+ levelNumber, 0);
+            
+            // Change la couleur selon la difficulté et par niveau complété
             if(levelCompleted == 1){
-                level.GetComponent<Image>().color = ColorManager.GetColor("levelFinished");
-            }
+                level.GetComponent<Image>().color = ColorManager.GetColor(difficultyname+"Completed");
+            } else level.GetComponent<Image>().color = ColorManager.GetColor(difficultyname);
+            infiniLevel.GetComponent<Image>().color = ColorManager.GetColor(difficultyname);
         }
 
         panelPlay.SetActive(true);
