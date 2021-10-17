@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<languages>
+    <language>
+        <name>Français</name>
+        <play>Jouer</play>
+        <settings>Paramètres</settings>
+        <characters>Avatars</characters>
+        <restart>Recommencer</restart>
+        <restart_ad>Continuer</restart_ad>
+        <highscore>Meilleur score</highscore>
+        <easy>Lent</easy>
+        <normal>Normal</normal>
+        <hard>Rapide</hard>
+        <tables>Tables de multiplication</tables>
+        <switch>Switch to</switch>
+    </language>
+    <language>
+        <name>English</name>
+        <play>Play</play>
+        <settings>Settings</settings>
+        <characters>Avatars</characters>
+        <restart>Restart</restart>
+        <restart_ad>Continue</restart_ad>
+        <highscore>High score</highscore>
+        <easy>Slow</easy>
+        <normal>Normal</normal>
+        <hard>Fast</hard>
+        <tables>Multiplication tables</tables>
+        <switch>Mettre en</switch>
+    </language>
+</languages>
