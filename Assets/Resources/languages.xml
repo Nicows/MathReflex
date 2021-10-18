@@ -5,7 +5,7 @@
         <name>Français</name>
         <play>Jouer</play>
         <settings>Paramètres</settings>
-        <characters>Avatars</characters>
+        <characters>Avatar</characters>
         <restart>Recommencer</restart>
         <restart_ad>Continuer</restart_ad>
         <highscore>Meilleur score</highscore>
@@ -19,7 +19,7 @@
         <name>English</name>
         <play>Play</play>
         <settings>Settings</settings>
-        <characters>Avatars</characters>
+        <characters>Avatar</characters>
         <restart>Restart</restart>
         <restart_ad>Continue</restart_ad>
         <highscore>High score</highscore>

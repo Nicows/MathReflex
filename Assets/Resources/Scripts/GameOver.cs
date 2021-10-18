@@ -29,7 +29,7 @@ public class GameOver : MonoBehaviour
             }
         }
         // textContinue.text = Languages.ad;
-        TimeManager.instance.StartSlowmotion(0.01f, 15f);
+        TimeManager.instance.StartEndSlowmotion(0.01f, 15f);
         StartCoroutine(WaitBeforeShow(2f));
 
 
@@ -57,6 +57,19 @@ public class GameOver : MonoBehaviour
     public static void ReturnToMenu()
     {
         ResetGame();
+        PlayerPrefs.SetString("ReturnedFrom","Menu");
+        SceneManager.LoadScene("MainMenu");
+    }
+    public static void ReturnToTables()
+    {
+        ResetGame();
+        PlayerPrefs.SetString("ReturnedFrom","Tables");
+        SceneManager.LoadScene("MainMenu");
+    }
+    public static void ReturnToAvatars()
+    {
+        ResetGame();
+        PlayerPrefs.SetString("ReturnedFrom","Avatars");
         SceneManager.LoadScene("MainMenu");
     }
 

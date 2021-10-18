@@ -20,7 +20,6 @@ public class ScoreManager : MonoBehaviour
 
         switch (currentDifficulty)
         {
-            case "Facile":
             case "Easy":
                 scoreMultiplier = 1;
                 comboDifficulty = 1;
@@ -31,7 +30,6 @@ public class ScoreManager : MonoBehaviour
                 comboDifficulty = 3;
                 break;
 
-            case "Difficile":
             case "Hard":
                 scoreMultiplier = 5;
                 comboDifficulty = 5;

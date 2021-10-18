@@ -14,6 +14,10 @@ public class AvatarManager : MonoBehaviour
     public GameObject groupAvatars;
     public RewardedAdsButton rewardedAdsButton;
 
+    private static Transform avatarToBuy;
+    private static bool needToRefresh = false;
+
+    public Image currentAvatar;
 
     private void Start()
     {
@@ -24,23 +28,30 @@ public class AvatarManager : MonoBehaviour
             PlayerPrefs.SetInt("Avatar_carre", 1);
             PlayerPrefs.SetString("AvatarUsed", "carre");
         }
-
+        rewardedAdsButton.LoadAd();
         RefreshAvatar();
+        avatarToBuy = null;
+    }
+    private void Update() {
+        if(needToRefresh){
+            RefreshAvatar();
+            needToRefresh = false;
+        }
     }
     public void BuyAd(Button button){
-        rewardedAdsButton.LoadAd();
+        avatarToBuy = button.transform.parent;
         rewardedAdsButton.ShowAd(button);
     }
-    public void BuyAvatar(GameObject avatar)
+    public static void BuyAvatar()
     {
         //RefreshAvatar ? SetInt avatar(name) 1(Bought)
-        PlayerPrefs.SetInt("Avatar_" + avatar.name, 1);
-        RefreshAvatar();
+        PlayerPrefs.SetInt("Avatar_" +  avatarToBuy.name, 1);
+        needToRefresh = true;
     }
     private void RefreshAvatar()
     {
         //Check all Avatars in the CharactersFlying and set Active all avatars bought(GetInt = 1)
-        foreach (Transform avatar in charactersFlying.GetComponentInChildren<Transform>())
+        foreach (Transform avatar in  charactersFlying.GetComponentInChildren<Transform>())
         {
             int avatarBought = PlayerPrefs.GetInt("Avatar_" + avatar.name, 0);
             if (avatarBought == 0) avatar.gameObject.SetActive(false);
@@ -48,7 +59,7 @@ public class AvatarManager : MonoBehaviour
         }
 
         //Check all Avatars bought and change button to select
-        foreach (Transform avatar in groupAvatars.GetComponentsInChildren<Transform>())
+        foreach (Transform avatar in  groupAvatars.GetComponentsInChildren<Transform>(true))
         {
             int avatarBought = PlayerPrefs.GetInt("Avatar_" + avatar.name, 0);
             if (avatarBought == 1)
@@ -65,13 +76,14 @@ public class AvatarManager : MonoBehaviour
                         if(PlayerPrefs.GetString("AvatarUsed","") == avatar.name){
                             button.interactable = false;
                             button.GetComponentInChildren<TMP_Text>().text = "Selected";
+                            currentAvatar.sprite = Resources.Load<Sprite>(path: "Images/Reflexion/"+avatar.name);
                         }else{
                             button.interactable = true;
                             button.GetComponentInChildren<TMP_Text>().text = "Select";
                         }
                     }
                 }
-            }
+            } 
         }
 
     }

@@ -14,11 +14,12 @@ public class CameraShake : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else if (Instance != this)
-            Destroy(gameObject);
-            
-        cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+            Destroy(gameObject); 
     }
-
+    private void Start() {
+        cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+        ShakeCamera(0,0);
+    }
     public void ShakeCamera(float intensity, float time)
     {
         CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();

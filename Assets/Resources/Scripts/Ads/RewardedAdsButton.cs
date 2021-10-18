@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-    [SerializeField] private Button _showAdButton ;
+    // [SerializeField] private Button _showAdButton ;
+    private Button currentButton;
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     [SerializeField] string _iOsAdUnitId = "Rewarded_iOS";
     string _adUnitId;
@@ -26,14 +27,14 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     public void LoadAd()
     {
         // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
-        Debug.Log("Loading Ad: " + _adUnitId);
+        // Debug.Log("Loading Ad: " + _adUnitId);
         Advertisement.Load(_adUnitId, this);
     }
 
     // If the ad successfully loads, add a listener to the button and enable it:
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
-        Debug.Log("Ad Loaded: " + adUnitId);
+        // Debug.Log("Ad Loaded: " + adUnitId);
 
         if (adUnitId.Equals(_adUnitId))
         {
@@ -50,8 +51,8 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         // Disable the button: 
         // _showAdButton.interactable = false;
-        _showAdButton = button;
-        _showAdButton.gameObject.SetActive(false);
+        currentButton = button;
+        currentButton.interactable = false;
         // Then show the ad:
         Advertisement.Show(_adUnitId, this);
     }
@@ -61,13 +62,12 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
-            Debug.Log("Unity Ads Rewarded Ad Completed");
+            // Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
             if(SceneManager.GetActiveScene().name == "MainScene")
                 GameOver.ResumeGame();
             else if(SceneManager.GetActiveScene().name == "MainMenu"){
-                AvatarManager avatarManager = GameObject.FindObjectOfType<AvatarManager>();
-                avatarManager.BuyAvatar(_showAdButton.GetComponentInParent<Transform>().gameObject);
+                AvatarManager.BuyAvatar();
             }
             // Load another ad:
             Advertisement.Load(_adUnitId, this);

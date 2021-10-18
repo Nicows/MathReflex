@@ -44,7 +44,9 @@ public class OpenDoor : MonoBehaviour
     }
     public void OpenTheDoor()
     {
-        // closestDoor.GetComponentInChildren<ParticleSystem>().Play();
+        var particuleMain = closestDoor.GetComponentInChildren<ParticleSystem>().main;
+        particuleMain.startColor = ColorManager.GetColor(PlayerPrefs.GetString("Difficulty","Easy"));
+        closestDoor.GetComponentInChildren<ParticleSystem>().Play();
         closestDoor.GetComponent<Animator>().Play("PorteOpen");
     }
 }

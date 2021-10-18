@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    private const float PLAYER_DISTANCE_SPAWN_LEVEL_PART = 20f;
+    private const float PLAYER_DISTANCE_SPAWN_LEVEL_PART = 25f;
 
     [SerializeField] private Transform level_Start;
     [SerializeField] private Transform level;
@@ -63,5 +63,7 @@ public class LevelGenerator : MonoBehaviour
     }
     private void SpawnEndLevel(Vector3 spawnPosition){
         Transform levelPartTransform = Instantiate(EndLevel, spawnPosition, Quaternion.identity);
+        var main = levelPartTransform.GetComponentInChildren<ParticleSystem>().main;
+        main.startColor = ColorManager.GetColor(PlayerPrefs.GetString("Difficulty","Easy"));
     }
 }

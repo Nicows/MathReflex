@@ -7,19 +7,15 @@ public class TimeManager : MonoBehaviour
 {
     public float slowdownFactor = 0.05f;
     public float slowdownLength = 10f;
-    public bool slowmotionEnable = false;
     public float slowmotionTime;
+    public bool slowmotionEnable = false;
 
-    public static TimeManager instance { get; private set;}
-    public MultipleGenerator multipleGenerator;
+    public static TimeManager instance { get; private set; }
 
-    public TMP_Text textCountDown;
     public Slider sliderCountDown;
-    public bool countdownEnable = false;
-    public int startCountDownAt = 10;
+    public float startCountDownAt = 10f;
     public float countDownTime;
-    private float nextUpdate = 1;
-    private float frequenceUpdate = 1f;
+    public bool countdownEnable = false;
 
     private void Awake()
     {
@@ -41,14 +37,14 @@ public class TimeManager : MonoBehaviour
                 break;
 
             case "Normal":
-                startCountDownAt = 6;
-                slowdownLength = 6;
+                startCountDownAt = 5;
+                slowdownLength = 5;
                 break;
 
             case "Difficile":
             case "Hard":
-                startCountDownAt = 3;
-                slowdownLength = 3;
+                startCountDownAt = 2;
+                slowdownLength = 2;
                 break;
 
             default:
@@ -56,11 +52,11 @@ public class TimeManager : MonoBehaviour
                 slowdownLength = 10;
                 break;
         }
-        
+
         sliderCountDown.maxValue = startCountDownAt;
         sliderCountDown.GetComponentInChildren<Image>().color = ColorManager.colorDifficulty;
         sliderCountDown.gameObject.SetActive(false);
-        nextUpdate = frequenceUpdate;
+        // nextUpdate = 1f;
     }
     private void Update()
     {
@@ -78,12 +74,10 @@ public class TimeManager : MonoBehaviour
         }
         if (countdownEnable)
         {
-            sliderCountDown.value = ((float)countDownTime);
-            if (Time.unscaledTime >= nextUpdate)
+            if (countDownTime > 0)
             {
-                // Change the next update (current second+1)
-                nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + frequenceUpdate;
-                CountDown();
+                countDownTime -= 1f * Time.unscaledDeltaTime;
+                sliderCountDown.value = countDownTime;
             }
         }
 
@@ -93,45 +87,52 @@ public class TimeManager : MonoBehaviour
     {
         Time.timeScale = slowdownFactor;
         Time.fixedDeltaTime = Time.timeScale * .02f;
-        slowmotionTime = Mathf.FloorToInt(Time.unscaledTime) + slowdownLength;
+        slowmotionTime = Time.unscaledTime + slowdownLength;
         slowmotionEnable = true;
-    }
-    public void StartSlowmotion(float slowdownFactor, float slowmotionLength = 10f)
-    {
-        Time.timeScale = slowdownFactor;
-        Time.fixedDeltaTime = Time.timeScale * .02f;
-        slowmotionTime = Mathf.FloorToInt(Time.unscaledTime) + slowmotionLength;
-        slowmotionEnable = true;
+        StartCountdown();
     }
     public void StopSlowmotion()
     {
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.deltaTime;
         slowmotionEnable = false;
+        slowmotionTime = 0;
+        StopCountdown();
     }
     public void CountDown()
     {
-        if (countDownTime > 0)
-        {
-            countDownTime -= frequenceUpdate;
-            sliderCountDown.value = countDownTime;
-            textCountDown.SetText(countDownTime.ToString());
-        }
+        // if (countdownEnable)
+        // {
+        //     sliderCountDown.value = countDownTime;
+        //     if (Time.unscaledTime >= nextUpdate)
+        //     {
+        //         // Change the next update (current second+1)
+        //         nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + 1f;
+        //         if (countDownTime > 0)
+        //         {
+        //             countDownTime -= 1f;
+        //             textCountDown.SetText(countDownTime.ToString());
+        //         }
+        //     }
+        // }
     }
     public void StartCountdown()
     {
         countdownEnable = true;
         countDownTime = startCountDownAt;
-        textCountDown.gameObject.SetActive(true);
-        textCountDown.SetText(countDownTime.ToString());
+
         sliderCountDown.gameObject.SetActive(true);
     }
     public void StopCountdown()
     {
         countdownEnable = false;
-        textCountDown.SetText(startCountDownAt.ToString());
-        sliderCountDown.value = startCountDownAt;
-        textCountDown.gameObject.SetActive(false);
-       sliderCountDown.gameObject.SetActive(false);
+        sliderCountDown.gameObject.SetActive(false);
+    }
+    public void StartEndSlowmotion(float slowdownFactor, float slowmotionLength = 10f)
+    {
+        Time.timeScale = slowdownFactor;
+        Time.fixedDeltaTime = Time.timeScale * .02f;
+        slowmotionTime = Mathf.FloorToInt(Time.unscaledTime) + slowmotionLength;
+        slowmotionEnable = true;
     }
 }

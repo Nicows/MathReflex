@@ -14,7 +14,7 @@ public class Languages : MonoBehaviour
     List<Dictionary<string, string>> languages = new List<Dictionary<string, string>>();
     Dictionary<string, string> obj;
 
-    public string languageName;
+    public static string languageName;
     public int currentLanguage;
     public TMP_Text textLanguage;
 
@@ -43,7 +43,7 @@ public class Languages : MonoBehaviour
     public TMP_Text textSwitchTo;
     private string switchTo;
 
-    public static string ad;
+    public string ad;
 
     private void Start() {
         Reader();

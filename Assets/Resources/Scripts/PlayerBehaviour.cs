@@ -11,12 +11,29 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject avatar;
 
     public float moveSpeed = 40f;
-    public float maxSpeed = 40f;
 
     public static bool isDead = false;
 
     private void Start() {
         SelectAvatar();
+        string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
+
+        switch (currentDifficulty)
+        {
+            case "Easy":
+                moveSpeed = 40f;
+                break;
+
+            case "Normal":
+                moveSpeed = 45f;
+                break;
+
+            case "Hard":
+                moveSpeed = 50f;
+                break;
+
+            default: break;
+        }
     }
     void Update()
     {
@@ -42,7 +59,7 @@ public class PlayerBehaviour : MonoBehaviour
             TimeManager.instance.StartSlowmotion();
         }
 
-        if (rb.velocity.x < maxSpeed) rb.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, rb.velocity.y);
+        // if (rb.velocity.x < maxSpeed) rb.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, rb.velocity.y);
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -53,7 +70,7 @@ public class PlayerBehaviour : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.None;
             rb.AddForce(new Vector2(-moveSpeed, moveSpeed), ForceMode2D.Impulse);
             rb.AddTorque(30f, ForceMode2D.Impulse);
-            // CameraShake.Instance.ShakeCamera(1f, 0.2f);
+            
         }
     }
     private void OnTriggerEnter2D(Collider2D other) {

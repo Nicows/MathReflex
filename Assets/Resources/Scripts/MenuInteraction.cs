@@ -7,8 +7,12 @@ using UnityEngine.UI;
 
 public class MenuInteraction : MonoBehaviour
 {
-    public TMP_Text difficultyTitle;
+    public static MenuInteraction Instance { get; private set; }
+    public GameObject mainPanel;
+    public GameObject panelAvatar;
     public GameObject panelPlay;
+
+    public TMP_Text difficultyTitle;
     public GameObject groupLevels;
     public List<GameObject> listLevels;
     public GameObject infiniLevel;
@@ -17,22 +21,86 @@ public class MenuInteraction : MonoBehaviour
     public TMP_Text scoreSlow;
     public TMP_Text scoreNormal;
     public TMP_Text scoreFast;
-    private void Start() {
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(gameObject);
+    }
+    private void Start()
+    {
+
         foreach (Transform level in groupLevels.transform)
         {
             listLevels.Add(level.gameObject);
         }
+        DisplayHighScore();
+        ReturnedFrom();
     }
     public void StartGame()
     {
         SceneManager.LoadScene(1); //1 for MainScene (the run)
     }
+    public void SelectDifficulty(string difficultyString)
+    {
+        if (Languages.languageName == "Français")
+        {
+            switch (difficultyString)
+            {
+                case "Easy":
+                    difficultyTitle.text = "Lent";
+                    break;
+                case "Hard":
+                    difficultyTitle.text = "Rapide";
+                    break;
+                default:
+                    difficultyTitle.text = difficultyString;
+                    break;
+            }
+        }
+        else if (Languages.languageName == "English")
+        {
+            switch (difficultyString)
+            {
+                case "Easy":
+                    difficultyTitle.text = "Slow";
+                    break;
+                case "Hard":
+                    difficultyTitle.text = "Fast";
+                    break;
+                default:
+                    difficultyTitle.text = difficultyString;
+                    break;
+            }
+        }
 
+        
+
+        PlayerPrefs.SetString("Difficulty", difficultyString);
+
+        foreach (GameObject level in listLevels)
+        {
+            int levelNumber = int.Parse(level.GetComponentInChildren<TMP_Text>().text);
+            int levelCompleted = PlayerPrefs.GetInt("Completed_" + difficultyString + "_" + levelNumber, 0);
+
+            // Change la couleur selon la difficulté et par niveau complété
+            if (levelCompleted == 1)
+            {
+                level.GetComponent<Image>().color = ColorManager.GetColor(difficultyString + "Completed");
+            }
+            else level.GetComponent<Image>().color = ColorManager.GetColor(difficultyString);
+            infiniLevel.GetComponent<Image>().color = ColorManager.GetColor(difficultyString);
+        }
+        mainPanel.SetActive(false);
+        panelPlay.SetActive(true);
+    }
     public void SelectDifficulty(TMP_Text difficulty)
     {
+        string difficultyname = "";
         difficultyTitle.text = difficulty.text;
-        string difficultyname;
-        
+
         switch (difficulty.text)
         {
             case "Lent":
@@ -53,21 +121,23 @@ public class MenuInteraction : MonoBehaviour
                 difficultyname = "Easy";
                 break;
         }
-        
+
         PlayerPrefs.SetString("Difficulty", difficultyname);
 
         foreach (GameObject level in listLevels)
         {
             int levelNumber = int.Parse(level.GetComponentInChildren<TMP_Text>().text);
-            int levelCompleted = PlayerPrefs.GetInt("Completed_"+difficultyname+"_"+ levelNumber, 0);
-            
+            int levelCompleted = PlayerPrefs.GetInt("Completed_" + difficultyname + "_" + levelNumber, 0);
+
             // Change la couleur selon la difficulté et par niveau complété
-            if(levelCompleted == 1){
-                level.GetComponent<Image>().color = ColorManager.GetColor(difficultyname+"Completed");
-            } else level.GetComponent<Image>().color = ColorManager.GetColor(difficultyname);
+            if (levelCompleted == 1)
+            {
+                level.GetComponent<Image>().color = ColorManager.GetColor(difficultyname + "Completed");
+            }
+            else level.GetComponent<Image>().color = ColorManager.GetColor(difficultyname);
             infiniLevel.GetComponent<Image>().color = ColorManager.GetColor(difficultyname);
         }
-
+        mainPanel.SetActive(false);
         panelPlay.SetActive(true);
     }
     public void SelectLevel(TMP_Text level)
@@ -80,29 +150,34 @@ public class MenuInteraction : MonoBehaviour
         PlayerPrefs.SetInt("Level", 0);
         StartGame();
     }
-    public void OpenPlayButton(Animator animator)
-    {
-        if (animator.GetBool("PlayIsOpen"))
-        {
-            animator.Play("PlayDisappear"); // Close the Play Button
-            animator.SetBool("PlayIsOpen", false);
-
-        }
-        else
-        {
-            animator.Play("PlayAppear"); // Open the Play Button
-            animator.SetBool("PlayIsOpen", true);
-        }
-    }
     public void DisplayHighScore()
     {
         scoreSlow.text = PlayerPrefs.GetInt("HighScore_Easy", 0).ToString();
         scoreNormal.text = PlayerPrefs.GetInt("HighScore_Normal", 0).ToString();
         scoreFast.text = PlayerPrefs.GetInt("HighScore_Hard", 0).ToString();
-        if (!groupHighScore.activeSelf)
-            groupHighScore.SetActive(true);
-        else 
-            groupHighScore.SetActive(false);
     }
-
+    public void SelectPanelAvatar()
+    {
+        mainPanel.SetActive(false);
+        panelAvatar.SetActive(true);
+    }
+    public void ReturnedFrom()
+    {
+        string returnedFrom = PlayerPrefs.GetString("ReturnedFrom", "Menu");
+        switch (returnedFrom)
+        {
+            case "Avatars":
+                mainPanel.SetActive(false);
+                panelAvatar.SetActive(true);
+                break;
+            case "Tables":
+                mainPanel.SetActive(false);
+                panelPlay.SetActive(true);
+                SelectDifficulty(PlayerPrefs.GetString("Difficulty", "Easy"));
+                break;
+            case "Menu":
+            default: break;
+        }
+        PlayerPrefs.SetString("ReturnedFrom", "Menu");
+    }
 }

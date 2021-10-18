@@ -24,13 +24,14 @@ public class MultipleGenerator : MonoBehaviour
     public static int multiplicationTableOf; //0 for infinite
     public int numberForMultiplicationTable = 1;
 
+    public GameObject buttonPause;
+
+    public Image[] backgroundButtons;
+
     private void Awake() {
         multiplicationTableOf = PlayerPrefs.GetInt("Level", 0); //0 for infinite
     }
-
-    // Update is called once per frame
-    void Update()
-    {
+    private void Start() {
 
     }
 
@@ -50,7 +51,6 @@ public class MultipleGenerator : MonoBehaviour
             falseResult1 = 0;
         }
         falseResult2 = result + Random.Range(1, 5);
-        EnableButtons(true);
         DisplayResult();
         
         if(multiplicationTableOf != 0){
@@ -61,6 +61,10 @@ public class MultipleGenerator : MonoBehaviour
     
     public void DisplayResult()
     {
+        EnablePause(false);
+        EnableButtons(true);
+        textCalcul.gameObject.SetActive(true);
+
         List<int> myList = new List<int>() { falseResult1, result, falseResult2 };
 
         //range la liste aléatoirement
@@ -73,7 +77,7 @@ public class MultipleGenerator : MonoBehaviour
         }
 
         //affiche le calcul et les résulats
-        textCalcul.SetText(firstNumber + "x" + secondNumber + " = " + result);
+        textCalcul.SetText(firstNumber + " x " + secondNumber);
         buttonReponse1.GetComponentInChildren<TMP_Text>().SetText(myList[0].ToString());
         buttonReponse2.GetComponentInChildren<TMP_Text>().SetText(myList[1].ToString());
         buttonReponse3.GetComponentInChildren<TMP_Text>().SetText(myList[2].ToString());
@@ -82,11 +86,10 @@ public class MultipleGenerator : MonoBehaviour
     public void CheckResult(Button button)
     {
         EnableButtons(false);
-
+        textCalcul.gameObject.SetActive(false);
         int resultChosen = int.Parse(button.GetComponentInChildren<TMP_Text>().text);
         CameraShake.Instance.ShakeCamera(5f, 0.1f);
         TimeManager.instance.StopSlowmotion();
-        TimeManager.instance.StopCountdown();
 
         if (resultChosen == result)
         {
@@ -94,12 +97,22 @@ public class MultipleGenerator : MonoBehaviour
             if(LevelGenerator.isALevelInfinite)
                 scoreManager.AddScore();
         }
+        EnablePause(true);
     }
     
     public void EnableButtons(bool enable)
     {
-        buttonGroup.SetActive(enable);
+        buttonReponse1.gameObject.SetActive(enable);
+        buttonReponse2.gameObject.SetActive(enable);
+        buttonReponse3.gameObject.SetActive(enable);
+        
+        for (int i = 0; i < backgroundButtons.Length; i++)
+        {
+            backgroundButtons[i].enabled = enable;
+        }
     }
-    
+    public void EnablePause(bool enable){
+        buttonPause.gameObject.SetActive(enable);
+    }
 
 }

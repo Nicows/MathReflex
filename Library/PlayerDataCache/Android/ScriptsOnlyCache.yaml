@@ -12,9 +12,11 @@ ScriptsOnlyBuild:
     - InterstitialAd
     - Languages
     - LevelGenerator
+    - MenuAnimation
     - MenuInteraction
     - MultipleGenerator
     - OpenDoor
+    - PauseMenu
     - PlayerBehaviour
     - RewardedAdsButton
     - ScoreManager
@@ -69,8 +71,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -93,7 +97,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Shadow
     - UnityEngine.UI.Slider
-    - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
     Assets/Resources/Scenes/MainMenu.unity:
     - Class: 1
@@ -169,31 +172,31 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4138}
     - Class: 114
-      Script: {instanceID: 4326}
+      Script: {instanceID: 4420}
     - Class: 114
-      Script: {instanceID: 4418}
+      Script: {instanceID: 4556}
     - Class: 114
-      Script: {instanceID: 4554}
+      Script: {instanceID: 5080}
     - Class: 114
-      Script: {instanceID: 5078}
+      Script: {instanceID: 5256}
     - Class: 114
-      Script: {instanceID: 5254}
+      Script: {instanceID: 5320}
     - Class: 114
-      Script: {instanceID: 5318}
+      Script: {instanceID: 5326}
     - Class: 114
-      Script: {instanceID: 5324}
+      Script: {instanceID: 5336}
     - Class: 114
-      Script: {instanceID: 5476}
+      Script: {instanceID: 5480}
     - Class: 114
-      Script: {instanceID: 5908}
+      Script: {instanceID: 5912}
     - Class: 114
-      Script: {instanceID: 5926}
+      Script: {instanceID: 5930}
     - Class: 114
-      Script: {instanceID: 6308}
+      Script: {instanceID: 6312}
     - Class: 114
-      Script: {instanceID: 6464}
+      Script: {instanceID: 6468}
     - Class: 114
-      Script: {instanceID: 6538}
+      Script: {instanceID: 6542}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -201,6 +204,10 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -268,6 +275,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2940}
     - Class: 114
+      Script: {instanceID: 2942}
+    - Class: 114
       Script: {instanceID: 2998}
     - Class: 114
       Script: {instanceID: 3004}
@@ -294,29 +303,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4242}
     - Class: 114
-      Script: {instanceID: 4404}
+      Script: {instanceID: 4406}
     - Class: 114
-      Script: {instanceID: 4418}
+      Script: {instanceID: 4420}
     - Class: 114
-      Script: {instanceID: 4488}
+      Script: {instanceID: 4490}
     - Class: 114
-      Script: {instanceID: 4506}
+      Script: {instanceID: 4508}
     - Class: 114
-      Script: {instanceID: 4554}
+      Script: {instanceID: 4556}
     - Class: 114
-      Script: {instanceID: 4804}
+      Script: {instanceID: 4806}
     - Class: 114
-      Script: {instanceID: 5254}
+      Script: {instanceID: 5256}
     - Class: 114
-      Script: {instanceID: 5370}
+      Script: {instanceID: 5374}
     - Class: 114
-      Script: {instanceID: 6164}
+      Script: {instanceID: 6168}
     - Class: 114
-      Script: {instanceID: 6174}
+      Script: {instanceID: 6178}
     - Class: 114
-      Script: {instanceID: 6308}
+      Script: {instanceID: 6312}
     - Class: 114
-      Script: {instanceID: 6538}
+      Script: {instanceID: 6542}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -570,7 +579,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: bf7d0c76b8fb15b304a476c92ae7a090
+      Hash: 1f1b989ac933717e8b617c64cad3c6cc
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RewardedAdsButton
@@ -588,7 +597,7 @@ ScriptsOnlyBuild:
     className: CinemachineOrbitalTransposer
   - hash:
       serializedVersion: 2
-      Hash: 3f0317574b1f9886d84348ada8b49ccf
+      Hash: dcb3799b9233b672874ac2dfd83cbc0d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AvatarManager
@@ -606,7 +615,7 @@ ScriptsOnlyBuild:
     className: PostProcessLayer
   - hash:
       serializedVersion: 2
-      Hash: 0b23b351097878ed7a573d3dbb509e56
+      Hash: bcec897e7e5c65139339ebd2ee11d7bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TimeManager
@@ -900,7 +909,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: b37f9b26bd518ee8baaf52a864c6bf2b
+      Hash: 214683a876e05826d16b961b291c7df2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MultipleGenerator
@@ -916,6 +925,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Redirections
   - hash:
       serializedVersion: 2
       Hash: 3164bc883ff663a5cdb32d1ef7e7c0c5
@@ -1158,10 +1173,16 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
-      Hash: dc51158b067d10b157ec4ff0d8af41ca
+      Hash: 43b503e83a811d9258c9cc2226aa2bc8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MenuInteraction
+  - hash:
+      serializedVersion: 2
+      Hash: aef22d39ac391ee3ae207c90b8e512e8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MenuAnimation
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
