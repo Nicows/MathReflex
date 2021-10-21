@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 
 public class TimeManager : MonoBehaviour
 {
@@ -11,18 +11,17 @@ public class TimeManager : MonoBehaviour
     public bool slowmotionEnable = false;
 
     public static TimeManager instance { get; private set; }
+    public MultipleGenerator multipleGenerator;
 
     public Slider sliderCountDown;
     public float startCountDownAt = 10f;
     public float countDownTime;
     public bool countdownEnable = false;
-
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else Destroy(gameObject);
-
     }
     private void Start()
     {
@@ -56,11 +55,9 @@ public class TimeManager : MonoBehaviour
         sliderCountDown.maxValue = startCountDownAt;
         sliderCountDown.GetComponentInChildren<Image>().color = ColorManager.colorDifficulty;
         sliderCountDown.gameObject.SetActive(false);
-        // nextUpdate = 1f;
     }
     private void Update()
     {
-
         if (slowmotionEnable)
         {
             if (Time.unscaledTime >= slowmotionTime)
@@ -82,7 +79,6 @@ public class TimeManager : MonoBehaviour
         }
 
     }
-
     public void StartSlowmotion()
     {
         Time.timeScale = slowdownFactor;
@@ -98,23 +94,7 @@ public class TimeManager : MonoBehaviour
         slowmotionEnable = false;
         slowmotionTime = 0;
         StopCountdown();
-    }
-    public void CountDown()
-    {
-        // if (countdownEnable)
-        // {
-        //     sliderCountDown.value = countDownTime;
-        //     if (Time.unscaledTime >= nextUpdate)
-        //     {
-        //         // Change the next update (current second+1)
-        //         nextUpdate = Mathf.FloorToInt(Time.unscaledTime) + 1f;
-        //         if (countDownTime > 0)
-        //         {
-        //             countDownTime -= 1f;
-        //             textCountDown.SetText(countDownTime.ToString());
-        //         }
-        //     }
-        // }
+        multipleGenerator.EnableButtons(false);
     }
     public void StartCountdown()
     {

@@ -48,5 +48,6 @@ public class OpenDoor : MonoBehaviour
         particuleMain.startColor = ColorManager.GetColor(PlayerPrefs.GetString("Difficulty","Easy"));
         closestDoor.GetComponentInChildren<ParticleSystem>().Play();
         closestDoor.GetComponent<Animator>().Play("PorteOpen");
+        closestDoor.GetComponent<AudioSource>().Play();
     }
 }

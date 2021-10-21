@@ -22,6 +22,10 @@ public class MenuInteraction : MonoBehaviour
     public TMP_Text scoreNormal;
     public TMP_Text scoreFast;
 
+    public AudioSource music;
+    public TMP_Text textMusicState;
+    private bool musicEnable = true;
+
     private void Awake()
     {
         if (Instance == null)
@@ -31,13 +35,13 @@ public class MenuInteraction : MonoBehaviour
     }
     private void Start()
     {
-
         foreach (Transform level in groupLevels.transform)
         {
             listLevels.Add(level.gameObject);
         }
         DisplayHighScore();
         ReturnedFrom();
+        LoadMusicState();
     }
     public void StartGame()
     {
@@ -179,5 +183,30 @@ public class MenuInteraction : MonoBehaviour
             default: break;
         }
         PlayerPrefs.SetString("ReturnedFrom", "Menu");
+    }
+    public void ChangeMusicState(){
+        if(musicEnable) {
+            music.enabled = false;
+            textMusicState.text = "OFF";
+            musicEnable = false;
+            PlayerPrefs.SetInt("Music", 0);
+        }
+        else {
+            music.enabled = true;
+            textMusicState.text = "ON";
+            musicEnable = true;
+            PlayerPrefs.SetInt("Music", 1);
+        }
+    }
+    public void LoadMusicState(){
+        if(PlayerPrefs.GetInt("Music", 0) == 0){
+            musicEnable = false;
+            music.enabled = false;
+            textMusicState.text = "OFF";
+        }else{
+            music.enabled = true;
+            textMusicState.text = "ON";
+            musicEnable = true;
+        }
     }
 }

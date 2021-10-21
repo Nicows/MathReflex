@@ -6,18 +6,23 @@ using TMPro;
 
 public class AvatarManager : MonoBehaviour
 {
-    public GameObject charactersFlying;
-    public GameObject moveSpotsFlying;
+    [Header ("Prefabs and Spawns")]
+    public GameObject spawnAvatarsFlying;
+    public GameObject spawnMoveSpotsFlying;
     public GameObject prefabAvatar;
     public GameObject prefabMoveSpot;
 
+    [Header ("Avatars in shop/inventaire")]
     public GameObject groupAvatars;
     public RewardedAdsButton rewardedAdsButton;
 
+    [Header ("Clicked Buy")]
     private static Transform avatarToBuy;
-    private static bool needToRefresh = false;
+    public static bool needToRefresh = false;
 
+    [Header ("Menu")]
     public Image currentAvatar;
+    public Languages languages;
 
     private void Start()
     {
@@ -32,26 +37,44 @@ public class AvatarManager : MonoBehaviour
         RefreshAvatar();
         avatarToBuy = null;
     }
-    private void Update() {
-        if(needToRefresh){
+    private void Update()
+    {
+        NeedToRefresh();
+    }
+    
+    /**
+     * @method NeedToRefresh() : void
+     * Need to refresh after buying avatar. Get var needToRefresh = true from BuyAvatar()
+     **/
+    private void NeedToRefresh(){
+        //
+        if (needToRefresh)
+        {
             RefreshAvatar();
             needToRefresh = false;
         }
     }
-    public void BuyAd(Button button){
+    
+    /**
+     * BuyAd() : void
+     * Need to refresh after buying avatar. Get var needToRefresh = true from BuyAvatar()
+     **/
+    public void BuyAd(Button button)
+    {
         avatarToBuy = button.transform.parent;
-        rewardedAdsButton.ShowAd(button);
+        // rewardedAdsButton.ShowAd(button);
+        BuyAvatar();
     }
     public static void BuyAvatar()
     {
         //RefreshAvatar ? SetInt avatar(name) 1(Bought)
-        PlayerPrefs.SetInt("Avatar_" +  avatarToBuy.name, 1);
+        PlayerPrefs.SetInt("Avatar_" + avatarToBuy.name, 1);
         needToRefresh = true;
     }
     private void RefreshAvatar()
     {
         //Check all Avatars in the CharactersFlying and set Active all avatars bought(GetInt = 1)
-        foreach (Transform avatar in  charactersFlying.GetComponentInChildren<Transform>())
+        foreach (Transform avatar in spawnAvatarsFlying.GetComponentInChildren<Transform>())
         {
             int avatarBought = PlayerPrefs.GetInt("Avatar_" + avatar.name, 0);
             if (avatarBought == 0) avatar.gameObject.SetActive(false);
@@ -59,12 +82,18 @@ public class AvatarManager : MonoBehaviour
         }
 
         //Check all Avatars bought and change button to select
-        foreach (Transform avatar in  groupAvatars.GetComponentsInChildren<Transform>(true))
+        foreach (Transform avatar in groupAvatars.GetComponentsInChildren<Transform>(true))
         {
             int avatarBought = PlayerPrefs.GetInt("Avatar_" + avatar.name, 0);
-            if (avatarBought == 1)
+
+            foreach (Button button in avatar.GetComponentsInChildren<Button>(true))
             {
-                foreach (Button button in avatar.GetComponentsInChildren<Button>(true))
+                if (button.name == "ButtonBuy")
+                {
+                    button.GetComponentInChildren<TMP_Text>().text = languages.GetBuy();
+                }
+
+                if (avatarBought == 1)
                 {
                     if (button.name == "ButtonBuy")
                     {
@@ -73,17 +102,21 @@ public class AvatarManager : MonoBehaviour
                     else if (button.name == "ButtonSelect")
                     {
                         button.gameObject.SetActive(true);
-                        if(PlayerPrefs.GetString("AvatarUsed","") == avatar.name){
+                        if (PlayerPrefs.GetString("AvatarUsed", "") == avatar.name)
+                        {
                             button.interactable = false;
-                            button.GetComponentInChildren<TMP_Text>().text = "Selected";
-                            currentAvatar.sprite = Resources.Load<Sprite>(path: "Images/Reflexion/"+avatar.name);
-                        }else{
+                            button.GetComponentInChildren<TMP_Text>().text = languages.GetSelected();
+                            currentAvatar.sprite = Resources.Load<Sprite>(path: "Images/Reflexion/" + avatar.name);
+                        }
+                        else
+                        {
                             button.interactable = true;
-                            button.GetComponentInChildren<TMP_Text>().text = "Select";
+                            button.GetComponentInChildren<TMP_Text>().text = languages.GetSelect();
                         }
                     }
                 }
-            } 
+            }
+
         }
 
     }
@@ -92,4 +125,5 @@ public class AvatarManager : MonoBehaviour
         PlayerPrefs.SetString("AvatarUsed", avatar.name);
         RefreshAvatar();
     }
+
 }

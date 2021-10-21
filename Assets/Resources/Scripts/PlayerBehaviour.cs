@@ -14,25 +14,27 @@ public class PlayerBehaviour : MonoBehaviour
 
     public static bool isDead = false;
 
-    private void Start() {
+    private void Start()
+    {
         SelectAvatar();
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
 
         switch (currentDifficulty)
         {
             case "Easy":
-                moveSpeed = 40f;
+                moveSpeed = 30f;
                 break;
 
             case "Normal":
-                moveSpeed = 45f;
+                moveSpeed = 42f;
                 break;
 
             case "Hard":
                 moveSpeed = 50f;
                 break;
-
-            default: break;
+            default:
+                moveSpeed = 30f;
+                break;
         }
     }
     void Update()
@@ -43,7 +45,7 @@ public class PlayerBehaviour : MonoBehaviour
             Translate();
         }
     }
-    
+
     private void Translate()
     {
         rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
@@ -70,18 +72,22 @@ public class PlayerBehaviour : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.None;
             rb.AddForce(new Vector2(-moveSpeed, moveSpeed), ForceMode2D.Impulse);
             rb.AddTorque(30f, ForceMode2D.Impulse);
-            
+
         }
     }
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.tag == "EndLevel"){
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "EndLevel")
+        {
+            other.GetComponent<AudioSource>().Play();
             moveSpeed = 1f;
             endLevel.FinishedLevel();
         }
     }
-    private void SelectAvatar(){
+    private void SelectAvatar()
+    {
         string avatarUsed = PlayerPrefs.GetString("AvatarUsed", "carre");
-        avatar.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path: "Images/Reflexion/"+avatarUsed);
+        avatar.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path: "Images/Reflexion/" + avatarUsed);
     }
-    
+
 }

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class ColorManager : MonoBehaviour
 {
     public static Color colorDifficulty;
+    
     private void Start()
     {
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");

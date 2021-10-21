@@ -5,13 +5,13 @@ using UnityEngine;
 public class MenuAnimation : MonoBehaviour
 {
     public Animator groupHighScore;
-    public bool highScoreOpen = false;
+    private bool highScoreOpen = false;
 
     public Animator groupPlay;
-    public bool playOpen = false;
+    private bool playOpen = false;
 
     public Animator groupAvatar;
-    public bool avatarOpen = false;
+    private bool avatarOpen = false;
     
 
     public void HighScoreOpen()

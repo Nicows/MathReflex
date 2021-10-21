@@ -43,7 +43,9 @@ public class Languages : MonoBehaviour
     public TMP_Text textSwitchTo;
     private string switchTo;
 
-    public string ad;
+    private string buy;
+    private string select;
+    private string selected;
 
     private void Start() {
         Reader();
@@ -62,8 +64,10 @@ public class Languages : MonoBehaviour
         languages[currentLanguage].TryGetValue("hard", out hard);
         languages[currentLanguage].TryGetValue("highscore", out highScore);
         languages[currentLanguage].TryGetValue("tables", out multiplTable);
-        languages[currentLanguage].TryGetValue("restart_ad", out ad);
         languages[currentLanguage].TryGetValue("switch", out switchTo);
+        languages[currentLanguage].TryGetValue("buy", out buy);
+        languages[currentLanguage].TryGetValue("select", out select);
+        languages[currentLanguage].TryGetValue("selected", out selected);
 
     }
     private void DisplayText()
@@ -108,15 +112,7 @@ public class Languages : MonoBehaviour
         PlayerPrefs.SetInt("Language", currentLanguage);
         GetText();
         DisplayText();
-    }
-    public static string FrenchToEnglish(string word)
-    {
-        switch (word)
-        {
-            case "Facile": return "Easy";
-            case "Difficile": return "Hard";
-            default: return word;
-        }
+        AvatarManager.needToRefresh = true;
     }
     void Reader()
     {
@@ -136,4 +132,15 @@ public class Languages : MonoBehaviour
             languages.Add(obj);
         }
     }
+    public string GetSelect(){
+        return select;
+    }
+    public string GetSelected(){
+        return selected;
+    }
+    public string GetBuy(){
+        return buy;
+    }
+    
+
 }

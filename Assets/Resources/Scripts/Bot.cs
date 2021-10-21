@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
-    public float speed;
-    private float waitTime;
-    public float startWaitTime;
-
     public Transform moveSpot;
-    public float minX;
-    public float maxX;
-    public float minY;
-    public float maxY;
+    private float minX = -10.6f;
+    private float maxX = 10.6f;
+    private float minY = -4.9f;
+    private float maxY = 4.9f;
 
-    public bool stopMoving = false;
+    private float speed = 2f;
+    private float startWaitTime  = 3f;
+    private float waitTime;
+    private bool stopMoving = false;
 
     private void Start()
     {

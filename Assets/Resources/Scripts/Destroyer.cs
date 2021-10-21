@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Destroyer : MonoBehaviour
 {
-    
-    public float lifetime;
+
+    [SerializeField] private float lifetime = 15;
 
     void Start()
     {
+        LifetimeOverDifficulty();
+    }
+    private void LifetimeOverDifficulty()
+    {
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-
         switch (currentDifficulty)
         {
             case "Facile":
@@ -27,16 +30,11 @@ public class Destroyer : MonoBehaviour
                 lifetime = 6;
                 break;
 
-            default: break;
+            default:
+                lifetime = 15;
+                break;
         }
-
-        if(LevelGenerator.isALevelInfinite)
+        if (LevelGenerator.isALevelInfinite)
             Destroy(gameObject, lifetime);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

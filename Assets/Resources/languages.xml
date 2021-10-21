@@ -14,6 +14,9 @@
         <hard>Rapide</hard>
         <tables>Tables de multiplication</tables>
         <switch>Switch to</switch>
+        <buy>Acheter</buy>
+        <select>Choisir</select>
+        <selected>Choisi</selected>
     </language>
     <language>
         <name>English</name>
@@ -28,5 +31,8 @@
         <hard>Fast</hard>
         <tables>Multiplication tables</tables>
         <switch>Mettre en</switch>
+        <buy>Buy</buy>
+        <select>Select</select>
+        <selected>Selected</selected>
     </language>
 </languages>

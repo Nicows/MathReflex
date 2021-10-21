@@ -37,6 +37,7 @@ public class MultipleGenerator : MonoBehaviour
 
     public void GetNumbers()
     {   
+        // Random.InitState(Time);
         if(multiplicationTableOf == 0){
             firstNumber = Random.Range(1, 10);
             secondNumber = Random.Range(1, 10);

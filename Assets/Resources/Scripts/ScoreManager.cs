@@ -83,4 +83,13 @@ public class ScoreManager : MonoBehaviour
         }
         textCombo.text = "x" + scoreMultiplier;
     }
+    public void AvatarCombo(){
+        string avatarUsed = PlayerPrefs.GetString("AvatarUsed","carre");
+
+        switch (avatarUsed)
+        {
+            
+            default:break;
+        }
+    }
 }
