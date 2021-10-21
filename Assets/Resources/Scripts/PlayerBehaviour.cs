@@ -16,26 +16,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Start()
     {
-        SelectAvatar();
-        string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-
-        switch (currentDifficulty)
-        {
-            case "Easy":
-                moveSpeed = 30f;
-                break;
-
-            case "Normal":
-                moveSpeed = 42f;
-                break;
-
-            case "Hard":
-                moveSpeed = 50f;
-                break;
-            default:
-                moveSpeed = 30f;
-                break;
-        }
+        GetPlayerAvatar();
+        GetDifficulty();
     }
     void Update()
     {
@@ -79,12 +61,33 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.tag == "EndLevel")
         {
-            other.GetComponent<AudioSource>().Play();
+            // other.GetComponent<AudioSource>().Play();
             moveSpeed = 1f;
             endLevel.FinishedLevel();
         }
     }
-    private void SelectAvatar()
+    private void GetDifficulty(){
+        string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
+
+        switch (currentDifficulty)
+        {
+            case "Easy":
+                moveSpeed = 30f;
+                break;
+
+            case "Normal":
+                moveSpeed = 42f;
+                break;
+
+            case "Hard":
+                moveSpeed = 50f;
+                break;
+            default:
+                moveSpeed = 30f;
+                break;
+        }
+    }
+    private void GetPlayerAvatar()
     {
         string avatarUsed = PlayerPrefs.GetString("AvatarUsed", "carre");
         avatar.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path: "Images/Reflexion/" + avatarUsed);

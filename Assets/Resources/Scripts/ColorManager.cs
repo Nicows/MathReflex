@@ -66,4 +66,12 @@ public class ColorManager : MonoBehaviour
                 gameobject.GetComponent<Image>().color = colorDifficulty;
         }
     }
+    public static void ColorShadowsButtons(GameObject UI){
+        Shadow[] allShadows = UI.GetComponentsInChildren<Shadow>(true);
+        string difficulty = PlayerPrefs.GetString("Difficulty","Easy");
+        for (int i = 0; i < allShadows.Length; i++)
+        {
+            allShadows[i].effectColor = GetColor(difficulty+"Completed");
+        }
+    }
 }

@@ -11,7 +11,12 @@ public class GameOver : MonoBehaviour
     public GameObject gameOverPanel;
     public RewardedAdsButton rewardedAdsButton;
     public Button buttonContinue;
-    // public TMP_Text textContinue;
+    public Image player;
+
+    private void Start() {
+        ColorManager.ColorShadowsButtons(gameOverPanel);
+        getPlayerAvatar();
+    }
 
     public void PlayerIsDead()
     {
@@ -80,4 +85,9 @@ public class GameOver : MonoBehaviour
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
     }
+    private void getPlayerAvatar(){
+       string avatarUsed = PlayerPrefs.GetString("AvatarUsed", "carre");
+       player.sprite = Resources.Load<Sprite>(path: "Images/Reflexion/" + avatarUsed);
+    }
+
 }
