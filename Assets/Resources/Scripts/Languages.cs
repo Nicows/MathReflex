@@ -1,11 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using System.IO;
 using System.Xml;
-using System.Text;
 
 
 public class Languages : MonoBehaviour
@@ -14,43 +9,23 @@ public class Languages : MonoBehaviour
     List<Dictionary<string, string>> languages = new List<Dictionary<string, string>>();
     Dictionary<string, string> obj;
 
-    public static string languageName;
     public int currentLanguage;
-    public TMP_Text textLanguage;
-
+    public static string languageName;
     private string play;
     private string characters;
-    public TMP_Text textPlay;
-    public TMP_Text textCharacters;
-
-    public TMP_Text textEasy;
-    public TMP_Text textNormal;
-    public TMP_Text textHard;
-    public TMP_Text textEasyHighScore;
-    public TMP_Text textNormalHighScore;
-    public TMP_Text textHardHighScore;
     private string easy;
     private string normal;
     private string hard;
-
     private string highScore;
-    public TMP_Text buttonHighScore;
-
-    public TMP_Text textMultiplTable;
-    private string multiplTable;
-
-    public TMP_Text textAvatar;
-    public TMP_Text textSwitchTo;
+    private string multipleTables;
     private string switchTo;
-
     private string buy;
     private string select;
     private string selected;
 
-    private void Start() {
-        Reader();
+    private void Awake() {
+        ReadXmlLanguageDoc();
         GetText();
-        DisplayText();
     }
 
     public void GetText()
@@ -63,58 +38,13 @@ public class Languages : MonoBehaviour
         languages[currentLanguage].TryGetValue("normal", out normal);
         languages[currentLanguage].TryGetValue("hard", out hard);
         languages[currentLanguage].TryGetValue("highscore", out highScore);
-        languages[currentLanguage].TryGetValue("tables", out multiplTable);
+        languages[currentLanguage].TryGetValue("tables", out multipleTables);
         languages[currentLanguage].TryGetValue("switch", out switchTo);
         languages[currentLanguage].TryGetValue("buy", out buy);
         languages[currentLanguage].TryGetValue("select", out select);
         languages[currentLanguage].TryGetValue("selected", out selected);
-
     }
-    private void DisplayText()
-    {
-        textPlay.text = play;
-        textCharacters.text = characters;
-
-        textEasy.text = easy;
-        textEasyHighScore.text = easy;
-        textNormal.text = normal;
-        textNormalHighScore.text = normal;
-        textHard.text = hard;
-        textHardHighScore.text = hard;
-
-        buttonHighScore.text = highScore;
-
-        textMultiplTable.text = multiplTable;
-        textAvatar.text = characters;
-        textSwitchTo.text = switchTo;
-
-        switch (currentLanguage)
-        {
-            case 0: textLanguage.text = "English"; break;
-            case 1: textLanguage.text = "Français"; break;
-            default: textLanguage.text = "Français"; break;
-        }
-    }
-    public void changeLanguage()
-    {
-        switch (textLanguage.text)
-        {
-            case "Français":
-                currentLanguage = 0;
-                textLanguage.text = "English";
-                break;
-            case "English":
-                currentLanguage = 1;
-                textLanguage.text = "Français";
-                break;
-            default: break;
-        }
-        PlayerPrefs.SetInt("Language", currentLanguage);
-        GetText();
-        DisplayText();
-        AvatarManager.needToRefresh = true;
-    }
-    void Reader()
+    private void ReadXmlLanguageDoc()
     {
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(dictionnary.text);
@@ -132,15 +62,46 @@ public class Languages : MonoBehaviour
             languages.Add(obj);
         }
     }
+    public void SetCurrentLanguage(int language){
+        currentLanguage = language;
+    }
+    public int GetCurrentLanguage(){
+        return currentLanguage;
+    }
+    public string GetLanguageName(){
+        return languageName;
+    }
+    public string GetPlay(){
+        return play;
+    }
+    public string GetCharacters(){
+        return characters;
+    }
+    public string GetEasy(){
+        return easy;
+    }
+    public string GetNormal(){
+        return normal;
+    }
+    public string GetHard(){
+        return hard;
+    }
+    public string GetHighScore(){
+        return highScore;
+    }
+    public string GetMultipleTables(){
+        return multipleTables;
+    }
+    public string GetSwitchTo(){
+        return switchTo;
+    }
+    public string GetBuy(){
+        return buy;
+    }
     public string GetSelect(){
         return select;
     }
     public string GetSelected(){
         return selected;
-    }
-    public string GetBuy(){
-        return buy;
-    }
-    
-
+    }    
 }

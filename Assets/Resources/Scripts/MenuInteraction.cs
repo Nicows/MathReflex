@@ -7,46 +7,43 @@ using UnityEngine.UI;
 
 public class MenuInteraction : MonoBehaviour
 {
-    public static MenuInteraction Instance { get; private set; }
+    [Header ("Panels")]
     public GameObject mainPanel;
     public GameObject panelAvatar;
     public GameObject panelPlay;
 
+    [Header ("Panel Play")]
     public TMP_Text difficultyTitle;
-    public GameObject groupLevels;
+    public GameObject groupOfAllLevels;
     public List<GameObject> listLevels;
     public GameObject infiniLevel;
 
+    [Header ("High Score")]
     public GameObject groupHighScore;
     public TMP_Text scoreSlow;
     public TMP_Text scoreNormal;
     public TMP_Text scoreFast;
 
+    [Header ("Music")]
     public AudioSource music;
     public TMP_Text textMusicState;
     private bool musicEnable = true;
 
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != this)
-            Destroy(gameObject);
-    }
     private void Start()
     {
-        foreach (Transform level in groupLevels.transform)
-        {
-            listLevels.Add(level.gameObject);
-        }
+        AddAllLevels();
         DisplayHighScore();
         ReturnedFrom();
         LoadMusicState();
     }
-    public void StartGame()
+    private void AddAllLevels()
     {
-        SceneManager.LoadScene(1); //1 for MainScene (the run)
+        foreach (Transform level in groupOfAllLevels.transform)
+        {
+            listLevels.Add(level.gameObject);
+        }
     }
+    
     public void SelectDifficulty(string difficultyString)
     {
         if (Languages.languageName == "Français")
@@ -94,8 +91,8 @@ public class MenuInteraction : MonoBehaviour
             {
                 level.GetComponent<Image>().color = ColorManager.GetColor(difficultyString + "Completed");
             }
-            else level.GetComponent<Image>().color = ColorManager.GetColor(difficultyString);
-            infiniLevel.GetComponent<Image>().color = ColorManager.GetColor(difficultyString);
+            else level.GetComponent<Image>().color = ColorManager.GetDifficultyColor();
+            infiniLevel.GetComponent<Image>().color = ColorManager.GetDifficultyColor();
         }
         mainPanel.SetActive(false);
         panelPlay.SetActive(true);
@@ -138,8 +135,8 @@ public class MenuInteraction : MonoBehaviour
             {
                 level.GetComponent<Image>().color = ColorManager.GetColor(difficultyname + "Completed");
             }
-            else level.GetComponent<Image>().color = ColorManager.GetColor(difficultyname);
-            infiniLevel.GetComponent<Image>().color = ColorManager.GetColor(difficultyname);
+            else level.GetComponent<Image>().color = ColorManager.GetDifficultyColor();
+            infiniLevel.GetComponent<Image>().color = ColorManager.GetDifficultyColor();
         }
         mainPanel.SetActive(false);
         panelPlay.SetActive(true);
@@ -147,12 +144,16 @@ public class MenuInteraction : MonoBehaviour
     public void SelectLevel(TMP_Text level)
     {
         PlayerPrefs.SetInt("Level", int.Parse(level.text));
-        StartGame();
+        LoadMainScene();
     }
     public void SelectInfini()
     {
         PlayerPrefs.SetInt("Level", 0);
-        StartGame();
+        LoadMainScene();
+    }
+    public void LoadMainScene()
+    {
+        SceneManager.LoadScene("MainScene");
     }
     public void DisplayHighScore()
     {

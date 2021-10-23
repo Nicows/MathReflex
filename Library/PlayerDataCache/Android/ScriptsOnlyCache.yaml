@@ -18,8 +18,10 @@ ScriptsOnlyBuild:
     - OpenDoor
     - PauseMenu
     - PlayerBehaviour
+    - ReturnTo
     - RewardedAdsButton
     - ScoreManager
+    - SetLanguageMenu
     - TimeManager
     - TriggerSlowMotion
     Cinemachine.dll:
@@ -33,10 +35,13 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -75,6 +80,9 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
+    UnityEngine.Advertisements.dll:
+    - UnityEngine.Advertisements.Placeholder
+    - UnityEngine.Advertisements.Platform.Editor.BannerPlaceholder
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -195,6 +203,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 6466}
     - Class: 114
       Script: {instanceID: 6540}
+    - Class: 114
+      Script: {instanceID: 19360}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -332,6 +342,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 6310}
     - Class: 114
       Script: {instanceID: 6540}
+    - Class: 114
+      Script: {instanceID: 94216}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -519,7 +531,7 @@ ScriptsOnlyBuild:
     className: CinemachineCollider
   - hash:
       serializedVersion: 2
-      Hash: 50be8eea3cd0769a710c8d3712a17242
+      Hash: 0f1cf924e5eeb1a0825c579a7de651d0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TriggerSlowMotion
@@ -561,7 +573,7 @@ ScriptsOnlyBuild:
     className: PlaymodeTestsController
   - hash:
       serializedVersion: 2
-      Hash: e0fd930aa47cdaed578b93343b4b948f
+      Hash: 112624ab4338df9d28686617cba846fd
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Languages
@@ -603,7 +615,7 @@ ScriptsOnlyBuild:
     className: CinemachineOrbitalTransposer
   - hash:
       serializedVersion: 2
-      Hash: 9c004213f7eee66885fe36b9896870d4
+      Hash: bac569045d45b53396d768753e8df7fc
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AvatarManager
@@ -621,7 +633,7 @@ ScriptsOnlyBuild:
     className: PostProcessLayer
   - hash:
       serializedVersion: 2
-      Hash: 8bab975ad8fd23a5c57bf8b4d3130fc8
+      Hash: e6283c4bfe27c7e76e4598f787c09b91
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TimeManager
@@ -633,7 +645,7 @@ ScriptsOnlyBuild:
     className: CinemachineBrain
   - hash:
       serializedVersion: 2
-      Hash: 3b2bc070fef69479e4143ab92dd13ff2
+      Hash: 82bf44bd8299a0012ac0efc3d6232d29
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PauseMenu
@@ -645,7 +657,7 @@ ScriptsOnlyBuild:
     className: CoroutineExecutor
   - hash:
       serializedVersion: 2
-      Hash: 7400285479a905ce9d1eae2bfe3a22a1
+      Hash: a59cdc58c7dba8c904349a678c7bd69a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LevelGenerator
@@ -699,7 +711,7 @@ ScriptsOnlyBuild:
     className: Placeholder
   - hash:
       serializedVersion: 2
-      Hash: 1d2ac213ea3ff89a12dcae8e560e6e83
+      Hash: c90c28252dbb6521d242f21f0ef2237f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ScoreManager
@@ -915,7 +927,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: 214683a876e05826d16b961b291c7df2
+      Hash: 6f3268a1123235b378e453c047e6f20f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MultipleGenerator
@@ -957,7 +969,7 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
-      Hash: 194187ee43b4c22478a234c93e131d8c
+      Hash: d879ce0d228718d4c33e5447a7fdb263
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EndLevel
@@ -969,7 +981,7 @@ ScriptsOnlyBuild:
     className: CinemachineFixedSignal
   - hash:
       serializedVersion: 2
-      Hash: 7106c8bbdf47f322bd03fed357bc199b
+      Hash: c8b953c13e486cf426e3bb017e276f61
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerBehaviour
@@ -1059,7 +1071,7 @@ ScriptsOnlyBuild:
     className: CinemachineShot
   - hash:
       serializedVersion: 2
-      Hash: 1ae0457e869026443ea56bf923d370ad
+      Hash: 8ca26bb6d90e8c28bb6b38f872095362
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameOver
@@ -1173,7 +1185,7 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
-      Hash: 7dd8f8c3be7352bbf9a1b34637886749
+      Hash: 83aaea839e94785b9026e5795ea45651
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MenuInteraction
@@ -1341,7 +1353,7 @@ ScriptsOnlyBuild:
     className: ScreenSpaceReflections
   - hash:
       serializedVersion: 2
-      Hash: d51713ffde2c68447a998a17e74468ea
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: OpenDoor
@@ -1429,6 +1441,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Postprocessing.Runtime.dll
     namespaceName: UnityEngine.Rendering.PostProcessing
     className: AmbientOcclusion
+  - hash:
+      serializedVersion: 2
+      Hash: 135213762303f4228c799e267b3c56e7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SetLanguageMenu
+  - hash:
+      serializedVersion: 2
+      Hash: 2f4ea3e270c21cca2cff55664b747cd3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ReturnTo
   platform: 13
   scenePathNames:
   - Assets/Resources/Scenes/MainMenu.unity

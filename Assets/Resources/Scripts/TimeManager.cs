@@ -5,19 +5,32 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class TimeManager : MonoBehaviour
 {
-    public float slowdownFactor = 0.05f;
-    public float slowdownLength = 10f;
-    public float slowmotionTime;
-    public bool slowmotionEnable = false;
-
     public static TimeManager instance { get; private set; }
+
+    [Header("Components")]
+    public GameObject buttonPause;
+    public Slider sliderCountDown;
+    public ReturnTo returnTo;
     public MultipleGenerator multipleGenerator;
 
-    public Slider sliderCountDown;
-    public float startCountDownAt = 10f;
-    public float countDownTime;
-    public bool countdownEnable = false;
+    [Header("Slowdown")]
+    private float slowdownFactor = .05f;
+    private float slowdownLength = 10f;
+    private bool slowmotionEnable = false;
+    private float slowmotionTime;
+    private float slowmotionRegular = .02f;
+
+    [Header("Countdown")]
+    private float startCountDownAt = 10f;
+    private bool countdownEnable = false;
+    private float countDownTime;
+
+
     private void Awake()
+    {
+        CheckInstance();
+    }
+    private void CheckInstance()
     {
         if (instance == null)
             instance = this;
@@ -25,38 +38,44 @@ public class TimeManager : MonoBehaviour
     }
     private void Start()
     {
+        GetStatsFromDifficulty();
+        SliderStart();
+    }
+    private void GetStatsFromDifficulty()
+    {
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-
         switch (currentDifficulty)
         {
-            case "Facile":
             case "Easy":
                 startCountDownAt = 10;
                 slowdownLength = 10;
+                slowdownFactor = .02f;
                 break;
-
             case "Normal":
                 startCountDownAt = 5;
                 slowdownLength = 5;
+                slowdownFactor = .025f;
                 break;
-
-            case "Difficile":
             case "Hard":
                 startCountDownAt = 2;
                 slowdownLength = 2;
+                slowdownFactor = .045f;
                 break;
-
-            default:
-                startCountDownAt = 10;
-                slowdownLength = 10;
-                break;
+            default: break;
         }
-
+    }
+    private void SliderStart()
+    {
         sliderCountDown.maxValue = startCountDownAt;
         sliderCountDown.GetComponentInChildren<Image>().color = ColorManager.colorDifficulty;
         sliderCountDown.gameObject.SetActive(false);
     }
     private void Update()
+    {
+        SlowmotionEnable();
+        CountdownEnable();
+    }
+    private void SlowmotionEnable()
     {
         if (slowmotionEnable)
         {
@@ -65,10 +84,13 @@ public class TimeManager : MonoBehaviour
                 StopSlowmotion();
                 if (PlayerBehaviour.isDead)
                 {
-                    GameOver.ReturnToMenu();
+                    returnTo.ReturnToMenu();
                 }
             }
         }
+    }
+    private void CountdownEnable()
+    {
         if (countdownEnable)
         {
             if (countDownTime > 0)
@@ -77,12 +99,11 @@ public class TimeManager : MonoBehaviour
                 sliderCountDown.value = countDownTime;
             }
         }
-
     }
     public void StartSlowmotion()
     {
         Time.timeScale = slowdownFactor;
-        Time.fixedDeltaTime = Time.timeScale * .02f;
+        Time.fixedDeltaTime = Time.timeScale * slowmotionRegular;
         slowmotionTime = Time.unscaledTime + slowdownLength;
         slowmotionEnable = true;
         StartCountdown();
@@ -94,24 +115,25 @@ public class TimeManager : MonoBehaviour
         slowmotionEnable = false;
         slowmotionTime = 0;
         StopCountdown();
-        multipleGenerator.EnableButtons(false);
+        buttonPause.gameObject.SetActive(true);
+        multipleGenerator.EnableButtonsResult(false);
     }
-    public void StartCountdown()
+    private void StartCountdown()
     {
-        countdownEnable = true;
         countDownTime = startCountDownAt;
-
+        countdownEnable = true;
         sliderCountDown.gameObject.SetActive(true);
     }
-    public void StopCountdown()
+    private void StopCountdown()
     {
         countdownEnable = false;
+        countDownTime = 0;
         sliderCountDown.gameObject.SetActive(false);
     }
-    public void StartEndSlowmotion(float slowdownFactor, float slowmotionLength = 10f)
+    public void StartEndSlowmotion(float slowdownFactor, float slowmotionLength)
     {
         Time.timeScale = slowdownFactor;
-        Time.fixedDeltaTime = Time.timeScale * .02f;
+        Time.fixedDeltaTime = Time.timeScale * slowmotionRegular;
         slowmotionTime = Mathf.FloorToInt(Time.unscaledTime) + slowmotionLength;
         slowmotionEnable = true;
     }

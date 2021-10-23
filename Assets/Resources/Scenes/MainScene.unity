@@ -241,21 +241,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c403865d30da747acb76a2d20cd1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstNumber: 0
-  secondNumber: 0
-  result: 0
-  falseResult1: 0
-  falseResult2: 0
-  textCalcul: {fileID: 547180269}
-  buttonReponse1: {fileID: 883060870}
-  buttonReponse2: {fileID: 613777961}
-  buttonReponse3: {fileID: 2028600412}
-  buttonGroup: {fileID: 638097761}
   scoreManager: {fileID: 1030464965}
   openDoor: {fileID: 769217282}
-  numberForMultiplicationTable: 1
+  cameraShake: {fileID: 243656469}
   buttonPause: {fileID: 237547995}
-  backgroundButtons:
+  textMultiplication: {fileID: 547180269}
+  groupButtonsResult: {fileID: 638097761}
+  buttonResult1: {fileID: 883060870}
+  buttonResult2: {fileID: 613777961}
+  buttonResult3: {fileID: 2028600412}
+  shadowsButtonsResult:
   - {fileID: 321617290}
   - {fileID: 803977767}
   - {fileID: 618688571}
@@ -344,7 +339,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1746190163}
         m_TargetAssemblyTypeName: EndLevel, Assembly-CSharp
-        m_MethodName: NextLevel
+        m_MethodName: LoadNextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5504,7 +5499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 92.6, y: -90.3}
+  m_AnchoredPosition: {x: 92.6001, y: -90.29999}
   m_SizeDelta: {x: 126.3792, y: 126.3792}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &237548000
@@ -5620,7 +5615,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &300921296
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5687,7 +5682,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 382931284}
         m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
-        m_MethodName: ResumeGame
+        m_MethodName: LoadAd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5752,7 +5747,7 @@ GameObject:
   - component: {fileID: 321617291}
   - component: {fileID: 321617290}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ShadowButton1
   m_TagString: Color
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5866,9 +5861,10 @@ MonoBehaviour:
   textScore: {fileID: 1944318983}
   textScoreNumber: {fileID: 1292412162}
   gameOverPanel: {fileID: 1699741547}
-  rewardedAdsButton: {fileID: 1875878764}
   buttonContinue: {fileID: 300921297}
   player: {fileID: 1410301735}
+  rewardedAdsButton: {fileID: 1875878764}
+  scoreManager: {fileID: 1030464965}
 --- !u!1 &421211664
 GameObject:
   m_ObjectHideFlags: 0
@@ -6784,7 +6780,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 190421476}
         m_TargetAssemblyTypeName: MultipleGenerator, Assembly-CSharp
-        m_MethodName: CheckResult
+        m_MethodName: SelectResult
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 613777961}
@@ -6844,7 +6840,7 @@ GameObject:
   - component: {fileID: 618688572}
   - component: {fileID: 618688571}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: ShadowButton3
   m_TagString: Color
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6986,7 +6982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 638097762}
   m_Layer: 0
-  m_Name: Buttons
+  m_Name: GroupButtonsResult
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7218,8 +7214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f2f11d0b796764c8371aacd0e3696a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doors: []
-  closestDoor: {fileID: 0}
 --- !u!1 &799489349
 GameObject:
   m_ObjectHideFlags: 0
@@ -7296,7 +7290,7 @@ GameObject:
   - component: {fileID: 803977768}
   - component: {fileID: 803977767}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: ShadowButton2
   m_TagString: Color
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7444,7 +7438,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 190421476}
         m_TargetAssemblyTypeName: MultipleGenerator, Assembly-CSharp
-        m_MethodName: CheckResult
+        m_MethodName: SelectResult
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 883060870}
@@ -7633,6 +7627,7 @@ Transform:
   - {fileID: 382931283}
   - {fileID: 1746190164}
   - {fileID: 1875878762}
+  - {fileID: 2042641756}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7801,11 +7796,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textScore: {fileID: 2066310089}
   textCombo: {fileID: 1390611402}
-  currentDifficulty: Hard
-  scoreMultiplier: 1
-  combo: 0
-  comboDifficulty: 0
-  nextCombo: 5
 --- !u!4 &1030464966
 Transform:
   m_ObjectHideFlags: 0
@@ -8410,8 +8400,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 382931284}
-        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+      - m_Target: {fileID: 2042641757}
+        m_TargetAssemblyTypeName: ReturnTo, Assembly-CSharp
         m_MethodName: ReturnToTables
         m_Mode: 1
         m_Arguments:
@@ -9149,8 +9139,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 382931284}
-        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+      - m_Target: {fileID: 2042641757}
+        m_TargetAssemblyTypeName: ReturnTo, Assembly-CSharp
         m_MethodName: ReturnToMenu
         m_Mode: 1
         m_Arguments:
@@ -9635,10 +9625,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0dccff7e1d41644b0691116536dc7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level_Start: {fileID: 1457880046}
-  level: {fileID: 4155503461434381556, guid: b53ae8d3e21a8534f8bcb7f0ac14451b, type: 3}
   player: {fileID: 377877062}
-  EndLevel: {fileID: 4502499732343029931, guid: 14fc96a5765e7f34ca660bd518c7d168, type: 3}
+  levelStart: {fileID: 1457880046}
+  levelPart: {fileID: 4155503461434381556, guid: b53ae8d3e21a8534f8bcb7f0ac14451b, type: 3}
+  levelEnd: {fileID: 4502499732343029931, guid: 14fc96a5765e7f34ca660bd518c7d168, type: 3}
 --- !u!4 &1485714497
 Transform:
   m_ObjectHideFlags: 0
@@ -9736,8 +9726,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 382931284}
-        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+      - m_Target: {fileID: 2042641757}
+        m_TargetAssemblyTypeName: ReturnTo, Assembly-CSharp
         m_MethodName: ReturnToAvatars
         m_Mode: 1
         m_Arguments:
@@ -9999,15 +9989,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cd15dea5616cc4cafbabbfd496617e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowdownFactor: 0.02
-  slowdownLength: 10
-  slowmotionTime: 0
-  slowmotionEnable: 0
-  multipleGenerator: {fileID: 190421476}
+  buttonPause: {fileID: 237547995}
   sliderCountDown: {fileID: 1779383969}
-  startCountDownAt: 10
-  countDownTime: 0
-  countdownEnable: 0
+  returnTo: {fileID: 2042641757}
+  multipleGenerator: {fileID: 190421476}
 --- !u!4 &1595701868
 Transform:
   m_ObjectHideFlags: 0
@@ -10035,6 +10020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUi: {fileID: 1322005555}
+  returnTo: {fileID: 2042641757}
 --- !u!1 &1658901107
 GameObject:
   m_ObjectHideFlags: 0
@@ -10319,9 +10305,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endLevelUI: {fileID: 211661239}
-  triggerEndLevel: {fileID: 0}
   buttonRetryLevel: {fileID: 1583085301}
   buttonNextLevel: {fileID: 200195554}
+  returnTo: {fileID: 2042641757}
 --- !u!4 &1746190164
 Transform:
   m_ObjectHideFlags: 0
@@ -10831,8 +10817,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 382931284}
-        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+      - m_Target: {fileID: 2042641757}
+        m_TargetAssemblyTypeName: ReturnTo, Assembly-CSharp
         m_MethodName: ReturnToAvatars
         m_Mode: 1
         m_Arguments:
@@ -11324,8 +11310,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 382931284}
-        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+      - m_Target: {fileID: 2042641757}
+        m_TargetAssemblyTypeName: ReturnTo, Assembly-CSharp
         m_MethodName: ReturnToTables
         m_Mode: 1
         m_Arguments:
@@ -11472,8 +11458,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 382931284}
-        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+      - m_Target: {fileID: 2042641757}
+        m_TargetAssemblyTypeName: ReturnTo, Assembly-CSharp
         m_MethodName: ReturnToMenu
         m_Mode: 1
         m_Arguments:
@@ -11953,7 +11939,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 190421476}
         m_TargetAssemblyTypeName: MultipleGenerator, Assembly-CSharp
-        m_MethodName: CheckResult
+        m_MethodName: SelectResult
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2028600412}
@@ -12001,6 +11987,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028600410}
   m_CullTransparentMesh: 1
+--- !u!1 &2042641755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2042641756}
+  - component: {fileID: 2042641757}
+  m_Layer: 0
+  m_Name: ReturnTo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2042641756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042641755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 937299825}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2042641757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042641755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43098051e871fd14eab75fa6f3db68a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreManager: {fileID: 1030464965}
 --- !u!1 &2066310087
 GameObject:
   m_ObjectHideFlags: 0
@@ -12437,6 +12467,10 @@ PrefabInstance:
       propertyPath: gameOver
       value: 
       objectReference: {fileID: 382931284}
+    - target: {fileID: 2266473639225198388, guid: e096efffcc0f5aa47acd7829839b139c, type: 3}
+      propertyPath: avatarUsed
+      value: 
+      objectReference: {fileID: 320797143}
     - target: {fileID: 2266473639225198389, guid: e096efffcc0f5aa47acd7829839b139c, type: 3}
       propertyPath: m_RootOrder
       value: 5

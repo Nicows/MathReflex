@@ -5,91 +5,102 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    [Header ("Text Components")]
     public TMP_Text textScore;
     public TMP_Text textCombo;
-    public string currentDifficulty;
-    public static int score = 0;
-    public int scoreMultiplier = 1;
-    public int combo = 0;
-    public int comboDifficulty;
-    public int nextCombo = 5;
+    
+    private int score = 0;
+    private string currentDifficulty;
+
+    [Header ("Combo")]
+    private int resultsAnswered = 0;
+    private int comboMultiplier = 1;
+    private int comboIncrementFromDifficulty;
+    private int nextComboAt = 5;
 
     private void Start()
     {
+        GetStatsFromDifficulty();
+        DisplayTextIfInfinite();
+    }
+    private void GetStatsFromDifficulty()
+    {
         currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-
         switch (currentDifficulty)
         {
             case "Easy":
-                scoreMultiplier = 1;
-                comboDifficulty = 1;
+                comboMultiplier = 1;
+                comboIncrementFromDifficulty = 1;
                 break;
 
             case "Normal":
-                scoreMultiplier = 3;
-                comboDifficulty = 3;
+                comboMultiplier = 3;
+                comboIncrementFromDifficulty = 3;
                 break;
 
             case "Hard":
-                scoreMultiplier = 5;
-                comboDifficulty = 5;
+                comboMultiplier = 5;
+                comboIncrementFromDifficulty = 5;
                 break;
 
             default: break;
         }
-        
-
+    }
+    private void DisplayTextIfInfinite()
+    {
         if (LevelGenerator.isALevelInfinite)
         {
             textScore.gameObject.SetActive(true);
             textCombo.gameObject.SetActive(true);
-            textScore.text = PlayerPrefs.GetInt("CurrentScore", 0).ToString();
-            textCombo.text = "x" + scoreMultiplier;
+            
+            score = PlayerPrefs.GetInt("CurrentScore", 0);
+            textScore.text = score.ToString();
+            textCombo.text = "x" + comboMultiplier;
         }
         else
         {
             textScore.gameObject.SetActive(false);
             textCombo.gameObject.SetActive(false);
         }
-
     }
     public void AddScore()
     {
-        score += 1 * scoreMultiplier;
+        score += 1 * comboMultiplier;
         textScore.SetText(score.ToString());
-        Combo();
+        AddResultAnswered();
     }
-    public static void ResetScore()
+    public int GetScore()
+    {
+        return score;
+    }
+    public void ResetScore()
     {
         PlayerPrefs.SetInt("CurrentScore", 0);
-        score = 0;
     }
-    public static void CalculateHighScore()
+    public void CalculateHighScore()
     {
-        string difficulty = PlayerPrefs.GetString("Difficulty", "Easy");
         PlayerPrefs.SetInt("CurrentScore", score);
-        if (score > PlayerPrefs.GetInt("HighScore_" + difficulty, 0))
+        if (score > PlayerPrefs.GetInt("HighScore_" + currentDifficulty, 0))
         {
-            PlayerPrefs.SetInt("HighScore_" + difficulty, score);
+            SetHighScore();
         }
     }
-    public void Combo()
+    private void SetHighScore()
     {
-        combo++;
-        if (combo >= nextCombo)
-        {
-            scoreMultiplier += comboDifficulty;
-            nextCombo = combo + 5;
-        }
-        textCombo.text = "x" + scoreMultiplier;
+        PlayerPrefs.SetInt("HighScore_" + currentDifficulty, score);
     }
-    public void AvatarCombo(){
-        string avatarUsed = PlayerPrefs.GetString("AvatarUsed","carre");
-
-        switch (avatarUsed)
+    public void AddResultAnswered()
+    {
+        resultsAnswered++;
+        checkNextCombo();
+        textCombo.text = "x" + comboMultiplier;
+    }
+    private void checkNextCombo(){
+        if (resultsAnswered >= nextComboAt)
         {
-            
-            default:break;
+            comboMultiplier += comboIncrementFromDifficulty;
+            nextComboAt = resultsAnswered + 5;
         }
     }
+    
 }

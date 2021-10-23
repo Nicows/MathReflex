@@ -1,44 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
 public class CameraShake : MonoBehaviour
 {
-    public static CameraShake Instance { get; private set; }
     private CinemachineVirtualCamera cinemachineVirtualCamera;
+    private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
     private float shakeTimer;
 
-    private void Awake()
+    private void Start()
     {
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != this)
-            Destroy(gameObject); 
+        GetCinemachineComponents();
     }
-    private void Start() {
+    private void GetCinemachineComponents()
+    {
         cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
-        ShakeCamera(0,0);
+        cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
     }
-    public void ShakeCamera(float intensity, float time)
-    {
-        CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
-        shakeTimer = time;
-    }
-
     private void Update()
     {
-        if (shakeTimer > 0)
+        ShakeTheCamera();
+    }
+    private void ShakeTheCamera()
+    {
+        if (shakeTimer > 0f)
         {
-            shakeTimer -= Time.deltaTime;
-            if (shakeTimer <= 0f)
+            shakeTimer -= Time.unscaledDeltaTime;
+            if (shakeTimer <= 0f) // Timer over
             {
-                // Timer over
-                CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
             }
         }
+    }
+    public void SetShakeCameraIntensity(float intensity, float time)
+    {
+        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
+        shakeTimer = time;
     }
 
 }

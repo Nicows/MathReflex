@@ -4,66 +4,66 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    private const float PLAYER_DISTANCE_SPAWN_LEVEL_PART = 25f;
+    private const float PLAYER_DISTANCE_GENERATE_LEVEL_PART = 25f;
 
-    [SerializeField] private Transform level_Start;
-    [SerializeField] private Transform level;
-    [SerializeField] private Transform player;
-    [SerializeField] private Transform EndLevel;
-
+    public Transform player;
+    public Transform levelStart;
+    public Transform levelPart;
+    public Transform levelEnd;
     private Vector3 lastEndPosition;
     public static bool isALevelInfinite = false;
-    private void Awake() {
-        if(PlayerPrefs.GetInt("Level", 0) == 0) isALevelInfinite = true;
+
+    private void Awake()
+    {
+        CheckIfLevelInfinite();
+    }
+    private void CheckIfLevelInfinite()
+    {
+        if (PlayerPrefs.GetInt("Level", 0) == 0) isALevelInfinite = true;
         else isALevelInfinite = false;
     }
     private void Start()
     {
-        
-        lastEndPosition = level_Start.Find("EndPosition").position;
-
-        if (isALevelInfinite == false)
+        GenerateStartLevel();
+        ColorManager.RefreshColorDifficultyInAllComponents();
+    }
+    private void GenerateStartLevel()
+    {
+        lastEndPosition = levelStart.Find("EndPosition").position;
+        if (isALevelInfinite) GenerateLevelPart();
+        else
         {
             for (int i = 0; i < 10; i++)
             {
-                SpawnLevelPart();
-                if(i == 9) SpawnEndLevel(lastEndPosition);
-                ColorManager.RefreshColor();
+                GenerateLevelPart();
+                if (i == 9) GenerateEndLevel(lastEndPosition);
             }
         }
-        else
-        {
-            SpawnLevelPart();
-            ColorManager.RefreshColor();
-        }
-
     }
-
     private void Update()
     {
+        CheckDistanceToGenerateLevelPart();
+    }
+    private void CheckDistanceToGenerateLevelPart(){
         if (isALevelInfinite)
         {
-            if (Vector3.Distance(player.position, lastEndPosition) < PLAYER_DISTANCE_SPAWN_LEVEL_PART)
+            if (Vector3.Distance(player.position, lastEndPosition) < PLAYER_DISTANCE_GENERATE_LEVEL_PART)
             {
-                SpawnLevelPart();
-                ColorManager.RefreshColor();
+                GenerateLevelPart();
+                ColorManager.RefreshColorDifficultyInAllComponents();
             }
         }
     }
-
-    public void SpawnLevelPart()
+    public void GenerateLevelPart()
     {
-        Transform lastLevelPartTransform = SpawnLevelPart(lastEndPosition);
+
+        Transform lastLevelPartTransform  = Instantiate(levelPart, lastEndPosition, Quaternion.identity);
         lastEndPosition = lastLevelPartTransform.Find("EndPosition").position;
     }
-    private Transform SpawnLevelPart(Vector3 spawnPosition)
+    private void GenerateEndLevel(Vector3 spawnPosition)
     {
-        Transform levelPartTransform = Instantiate(level, spawnPosition, Quaternion.identity);
-        return levelPartTransform;
-    }
-    private void SpawnEndLevel(Vector3 spawnPosition){
-        Transform levelPartTransform = Instantiate(EndLevel, spawnPosition, Quaternion.identity);
-        var main = levelPartTransform.GetComponentInChildren<ParticleSystem>().main;
-        main.startColor = ColorManager.GetColor(PlayerPrefs.GetString("Difficulty","Easy"));
+        Transform levelPartTransform = Instantiate(levelEnd, spawnPosition, Quaternion.identity);
+        ParticleSystem.MainModule main = levelPartTransform.GetComponentInChildren<ParticleSystem>().main;
+        main.startColor = ColorManager.colorDifficulty;
     }
 }

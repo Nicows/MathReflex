@@ -4,42 +4,52 @@ using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
+    [Header ("Move Spot")]
     public Transform moveSpot;
-    private float minX = -10.6f;
-    private float maxX = 10.6f;
-    private float minY = -4.9f;
-    private float maxY = 4.9f;
+    private const float MIN_X = -10.6f;
+    private const float MAX_X = 10.6f;
+    private const float MIN_Y = -4.9f;
+    private const float MAX_Y = 4.9f;
 
-    private float speed = 2f;
-    private float startWaitTime  = 3f;
-    private float waitTime;
+    [Header ("Movements")]
+    private const float SPEED = 2f;
+    private const float WAIT_TIME  = 3f;
+    private float waiting = WAIT_TIME;
     private bool stopMoving = false;
 
     private void Start()
     {
-        waitTime = startWaitTime;
-        moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+        SelectRandomMoveSpot();
     }
 
     private void Update()
     {
+        CheckMoving();
+    }
+    private void CheckMoving(){
         if (stopMoving == false)
         {
-            transform.position = Vector2.MoveTowards(transform.position, moveSpot.position, speed * Time.deltaTime);
-
+            MoveToMoveSpot();
             if (Vector2.Distance(transform.position, moveSpot.position) < 0.2f)
             {
-                if (waitTime <= 0)
+                if (waiting <= 0)
                 {
-                    moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-                    waitTime = startWaitTime;
+                    SelectRandomMoveSpot();
+                    waiting = WAIT_TIME;
                 }
                 else
                 {
-                    waitTime -= Time.deltaTime;
+                    waiting -= Time.deltaTime;
                 }
             }
         }
-
     }
+    private void MoveToMoveSpot(){
+        transform.position = Vector2.MoveTowards(transform.position, moveSpot.position, SPEED * Time.deltaTime);
+    }
+
+    private void SelectRandomMoveSpot(){
+        moveSpot.position = new Vector2(Random.Range(MIN_X, MAX_X), Random.Range(MIN_Y, MAX_Y));
+    }
+
 }

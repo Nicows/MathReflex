@@ -6,83 +6,67 @@ using TMPro;
 
 public class AvatarManager : MonoBehaviour
 {
-    [Header ("Prefabs and Spawns")]
+
+    [Header("Prefabs and Spawns")]
     public GameObject spawnAvatarsFlying;
     public GameObject spawnMoveSpotsFlying;
     public GameObject prefabAvatar;
     public GameObject prefabMoveSpot;
 
-    [Header ("Avatars in shop/inventaire")]
-    public GameObject groupAvatars;
+    [Header("Avatars in shop/inventaire")]
+    public GameObject groupOfAvatarsShop;
     public RewardedAdsButton rewardedAdsButton;
 
-    [Header ("Clicked Buy")]
-    private static Transform avatarToBuy;
+    [Header("Clicked Buy")]
+    private static Transform avatarToBuy = null;
     public static bool needToRefresh = false;
 
-    [Header ("Menu")]
+    [Header("Menu")]
     public Image currentAvatar;
     public Languages languages;
 
     private void Start()
     {
-
+        GetAvatarWhenFirstStart();
+        RefreshAvatar();
+    }
+    private void GetAvatarWhenFirstStart()
+    {
         //Début du jeu lorsqu'on a aucun avatar
         if (PlayerPrefs.GetString("AvatarUsed", "") == "")
         {
             PlayerPrefs.SetInt("Avatar_carre", 1);
             PlayerPrefs.SetString("AvatarUsed", "carre");
         }
-        rewardedAdsButton.LoadAd();
-        RefreshAvatar();
-        avatarToBuy = null;
     }
     private void Update()
     {
         NeedToRefresh();
     }
-    
-    /**
-     * @method NeedToRefresh() : void
-     * Need to refresh after buying avatar. Get var needToRefresh = true from BuyAvatar()
-     **/
-    private void NeedToRefresh(){
-        //
+
+    private void NeedToRefresh()
+    {
         if (needToRefresh)
         {
             RefreshAvatar();
             needToRefresh = false;
         }
     }
-    
-    /**
-     * BuyAd() : void
-     * Need to refresh after buying avatar. Get var needToRefresh = true from BuyAvatar()
-     **/
-    public void BuyAd(Button button)
+    public void DisplayAd(Button button)
     {
         avatarToBuy = button.transform.parent;
-        // rewardedAdsButton.ShowAd(button);
-        BuyAvatar();
+        rewardedAdsButton.ShowAd(button);
     }
     public static void BuyAvatar()
     {
-        //RefreshAvatar ? SetInt avatar(name) 1(Bought)
         PlayerPrefs.SetInt("Avatar_" + avatarToBuy.name, 1);
         needToRefresh = true;
     }
     private void RefreshAvatar()
     {
-        //Check all Avatars in the CharactersFlying and set Active all avatars bought(GetInt = 1)
-        foreach (Transform avatar in spawnAvatarsFlying.GetComponentInChildren<Transform>())
-        {
-            int avatarBought = PlayerPrefs.GetInt("Avatar_" + avatar.name, 0);
-            if (avatarBought == 0) avatar.gameObject.SetActive(false);
-            else if (avatarBought == 1) avatar.gameObject.SetActive(true);
-        }
-
+        CheckAvatarBought();
         //Check all Avatars bought and change button to select
-        foreach (Transform avatar in groupAvatars.GetComponentsInChildren<Transform>(true))
+        foreach (Transform avatar in groupOfAvatarsShop.GetComponentsInChildren<Transform>(true))
         {
             int avatarBought = PlayerPrefs.GetInt("Avatar_" + avatar.name, 0);
 
@@ -119,6 +103,16 @@ public class AvatarManager : MonoBehaviour
 
         }
 
+    }
+    private void CheckAvatarBought()
+    {
+        //Check all Avatars in the CharactersFlying and set Active all avatars bought(GetInt = 1)
+        foreach (Transform avatar in spawnAvatarsFlying.GetComponentInChildren<Transform>())
+        {
+            int avatarBought = PlayerPrefs.GetInt("Avatar_" + avatar.name, 0);
+            if (avatarBought == 0) avatar.gameObject.SetActive(false);
+            else if (avatarBought == 1) avatar.gameObject.SetActive(true);
+        }
     }
     public void SelectAvatar(GameObject avatar)
     {

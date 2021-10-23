@@ -4,30 +4,24 @@ using UnityEngine.UI;
 public class ColorManager : MonoBehaviour
 {
     public static Color colorDifficulty;
-    
+
     private void Start()
+    {
+        GetDifficultyColor();
+        RefreshColorDifficultyInAllComponents();
+    }
+    public static Color GetDifficultyColor()
     {
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
         colorDifficulty = GetColor(currentDifficulty);
-        RefreshColor();
+        return colorDifficulty;
     }
-
     public static Color GetColor(string colorString)
     {
-        Color color;
         string colorHex;
 
         switch (colorString)
         {
-            case "green":
-                colorHex = "#6EC6BA";
-                break;
-            case "blue":
-                colorHex = "#55C5FA";
-                break;
-            case "red":
-                colorHex = "#DD3829";
-                break;
             case "Easy":
                 colorHex = "#6EC6BA";
                 break;
@@ -51,10 +45,11 @@ public class ColorManager : MonoBehaviour
                 break;
         }
 
+        Color color;
         ColorUtility.TryParseHtmlString(colorHex, out color);
         return color;
     }
-    public static void RefreshColor()
+    public static void RefreshColorDifficultyInAllComponents()
     {
         GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Color");
 
@@ -66,12 +61,13 @@ public class ColorManager : MonoBehaviour
                 gameobject.GetComponent<Image>().color = colorDifficulty;
         }
     }
-    public static void ColorShadowsButtons(GameObject UI){
+    public static void ColorShadowsButtons(GameObject UI)
+    {
         Shadow[] allShadows = UI.GetComponentsInChildren<Shadow>(true);
-        string difficulty = PlayerPrefs.GetString("Difficulty","Easy");
+        string difficulty = PlayerPrefs.GetString("Difficulty", "Easy");
         for (int i = 0; i < allShadows.Length; i++)
         {
-            allShadows[i].effectColor = GetColor(difficulty+"Completed");
+            allShadows[i].effectColor = colorDifficulty;
         }
     }
 }

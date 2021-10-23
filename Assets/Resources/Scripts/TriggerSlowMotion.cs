@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class TriggerSlowMotion : MonoBehaviour
 {
-    public TimeManager timeManager;
+    [Header ("Scripts")]
     public MultipleGenerator multipleGenerator;
     
     private void Awake() {
-        timeManager = GameObject.FindObjectOfType<TimeManager>();
         multipleGenerator = GameObject.FindObjectOfType<MultipleGenerator>();
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        multipleGenerator.GetNumbers();
-        timeManager.StartSlowmotion();
+        multipleGenerator.GenerateNumbers();
+        TimeManager.instance.StartSlowmotion();
         gameObject.SetActive(false);
     }
 }

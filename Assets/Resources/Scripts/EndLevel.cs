@@ -7,39 +7,46 @@ using UnityEngine.SceneManagement;
 public class EndLevel : MonoBehaviour
 {
     public GameObject endLevelUI;
-    public GameObject triggerEndLevel;
     private int levelnumber;
     private int nextLevel;
     public Button buttonRetryLevel;
     public Button buttonNextLevel;
+    public ReturnTo returnTo;
 
-    private void Start() {
-        if(LevelGenerator.isALevelInfinite == false) triggerEndLevel = GameObject.FindGameObjectWithTag("EndLevel");
+    private void Start()
+    {
         ColorManager.ColorShadowsButtons(endLevelUI);
-
     }
-    public void FinishedLevel() {
+    public void FinishedLevel()
+    {
         StartCoroutine(WaitBeforeShow(2f));
-        
-        levelnumber = PlayerPrefs.GetInt("Level", 0);
-        string currentDifficulty = PlayerPrefs.GetString("Difficulty","Easy");
-        if(PlayerPrefs.GetInt("Completed_"+currentDifficulty+"_"+levelnumber, 0) == 0)
-            PlayerPrefs.SetInt("Completed_"+currentDifficulty+"_"+levelnumber, 1);
-        if(levelnumber == 10) GameOver.ReturnToTables();
+        CheckLevelCompleted();
         nextLevel = levelnumber + 1;
     }
-    public void RetryLevel(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    public void NextLevel(){
-        if (levelnumber == 10) PlayerPrefs.SetInt("Level", 0);
-        else PlayerPrefs.SetInt("Level", nextLevel);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    IEnumerator  WaitBeforeShow(float secondes){
-
+    IEnumerator WaitBeforeShow(float secondes)
+    {
         yield return new WaitForSeconds(secondes);
         endLevelUI.SetActive(true);
     }
+    private void CheckLevelCompleted()
+    {
+        levelnumber = PlayerPrefs.GetInt("Level", 0);
+        string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
+        if (PlayerPrefs.GetInt("Completed_" + currentDifficulty + "_" + levelnumber, 0) == 0)
+            PlayerPrefs.SetInt("Completed_" + currentDifficulty + "_" + levelnumber, 1);
+    }
+    public void RetryLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void LoadNextLevel()
+    {
+        if (nextLevel == 11) returnTo.ReturnToTables();
+        else
+        {
+            PlayerPrefs.SetInt("Level", nextLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Destroyer : MonoBehaviour
 {
-
     [SerializeField] private float lifetime = 15;
 
     void Start()
@@ -16,20 +15,15 @@ public class Destroyer : MonoBehaviour
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
         switch (currentDifficulty)
         {
-            case "Facile":
             case "Easy":
                 lifetime = 15;
                 break;
-
             case "Normal":
                 lifetime = 10;
                 break;
-
-            case "Difficile":
             case "Hard":
                 lifetime = 6;
                 break;
-
             default:
                 lifetime = 15;
                 break;

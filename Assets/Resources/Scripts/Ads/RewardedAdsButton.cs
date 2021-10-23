@@ -52,8 +52,12 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         // Disable the button: 
         // _showAdButton.interactable = false;
         currentButton = button;
-        currentButton.interactable = false;
+        // currentButton.interactable = false;
         // Then show the ad:
+        Advertisement.Show(_adUnitId, this);
+    }
+    public void ShowAd()
+    {
         Advertisement.Show(_adUnitId, this);
     }
 
@@ -65,7 +69,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
             // Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
             if(SceneManager.GetActiveScene().name == "MainScene")
-                GameOver.ResumeGame();
+                GameOver.ContinueGameWithAd();
             else if(SceneManager.GetActiveScene().name == "MainMenu"){
                 AvatarManager.BuyAvatar();
             }

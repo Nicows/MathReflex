@@ -4,50 +4,41 @@ using UnityEngine;
 
 public class OpenDoor : MonoBehaviour
 {
+    [Header ("Doors")]
+    private GameObject[] allDoors;
+    private GameObject closestDoor = null;
 
-    public GameObject[] doors;
-    public GameObject closestDoor;
-
-    public static OpenDoor instance;
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
-    void Start()
-    {
-        closestDoor = null;
-    }
     private void Update() {
-        closestDoor = getClosestDoor().gameObject;
+        getClosestDoor();
     }
     
-    public Transform getClosestDoor(){
+    public void getClosestDoor(){
         
-        doors = GameObject.FindGameObjectsWithTag("Porte");
+        allDoors = GameObject.FindGameObjectsWithTag("Porte");
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         float closestDistance = Mathf.Infinity;
-        Transform trans = null;
+        GameObject currentClosestDoor = null;
 
-        foreach (GameObject go in doors)
+        foreach (GameObject door in allDoors)
         {
             float currentDistance;
-            currentDistance = Vector3.Distance(player.transform.position, go.transform.position);
+            currentDistance = Vector3.Distance(player.transform.position, door.transform.position);
             if(currentDistance < closestDistance){
                 closestDistance = currentDistance;
-                trans = go.transform;
+                currentClosestDoor = door;
             }
         }
-        return trans;
+        closestDoor = currentClosestDoor;
     }
     public void OpenTheDoor()
     {
-        var particuleMain = closestDoor.GetComponentInChildren<ParticleSystem>().main;
-        particuleMain.startColor = ColorManager.GetColor(PlayerPrefs.GetString("Difficulty","Easy"));
-        closestDoor.GetComponentInChildren<ParticleSystem>().Play();
         closestDoor.GetComponent<Animator>().Play("PorteOpen");
         closestDoor.GetComponent<AudioSource>().Play();
+        PlayParticulesDoor();
+    }
+    private void PlayParticulesDoor(){
+        ParticleSystem.MainModule particuleMain = closestDoor.GetComponentInChildren<ParticleSystem>().main;
+        particuleMain.startColor = ColorManager.colorDifficulty;
+        closestDoor.GetComponentInChildren<ParticleSystem>().Play();
     }
 }
