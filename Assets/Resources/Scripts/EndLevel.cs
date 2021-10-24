@@ -19,6 +19,7 @@ public class EndLevel : MonoBehaviour
     }
     public void FinishedLevel()
     {
+        // TimeManager.instance.StartEndSlowmotion(0.01f, 15f);
         StartCoroutine(WaitBeforeShow(2f));
         CheckLevelCompleted();
         nextLevel = levelnumber + 1;

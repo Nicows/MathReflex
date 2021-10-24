@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
     // [SerializeField] private Button _showAdButton ;
-    private Button currentButton;
+    [SerializeField] private Button currentButton;
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     [SerializeField] string _iOsAdUnitId = "Rewarded_iOS";
     string _adUnitId;
@@ -60,19 +60,20 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         Advertisement.Show(_adUnitId, this);
     }
-
     // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
     {
+       
+
         if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             // Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-            if(SceneManager.GetActiveScene().name == "MainScene")
+            if (SceneManager.GetActiveScene().name == "MainMenu")
+                AvatarManager.BuyAvatar(currentButton.transform.parent.gameObject);
+            else if (SceneManager.GetActiveScene().name == "MainScene")
                 GameOver.ContinueGameWithAd();
-            else if(SceneManager.GetActiveScene().name == "MainMenu"){
-                AvatarManager.BuyAvatar();
-            }
+             
             // Load another ad:
             Advertisement.Load(_adUnitId, this);
         }
@@ -91,7 +92,9 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         // Use the error details to determine whether to try to load another ad.
     }
 
-    public void OnUnityAdsShowStart(string adUnitId) { }
+    public void OnUnityAdsShowStart(string adUnitId) { 
+        // AvatarManager.BuyAvatar(currentButton.transform.parent.gameObject);
+    }
     public void OnUnityAdsShowClick(string adUnitId) { }
 
     void OnDestroy()

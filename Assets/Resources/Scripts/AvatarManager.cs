@@ -18,7 +18,7 @@ public class AvatarManager : MonoBehaviour
     public RewardedAdsButton rewardedAdsButton;
 
     [Header("Clicked Buy")]
-    private static Transform avatarToBuy = null;
+    private static Transform avatarToBuy;
     public static bool needToRefresh = false;
 
     [Header("Menu")]
@@ -29,6 +29,7 @@ public class AvatarManager : MonoBehaviour
     {
         GetAvatarWhenFirstStart();
         RefreshAvatar();
+        rewardedAdsButton.LoadAd();
     }
     private void GetAvatarWhenFirstStart()
     {
@@ -54,12 +55,12 @@ public class AvatarManager : MonoBehaviour
     }
     public void DisplayAd(Button button)
     {
-        avatarToBuy = button.transform.parent;
+        rewardedAdsButton.LoadAd();
         rewardedAdsButton.ShowAd(button);
     }
-    public static void BuyAvatar()
+    public static void BuyAvatar(GameObject avatar)
     {
-        PlayerPrefs.SetInt("Avatar_" + avatarToBuy.name, 1);
+        PlayerPrefs.SetInt("Avatar_" + avatar.name, 1);
         needToRefresh = true;
     }
     private void RefreshAvatar()

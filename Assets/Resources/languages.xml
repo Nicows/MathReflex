@@ -7,7 +7,7 @@
         <settings>Paramètres</settings>
         <characters>Avatar</characters>
         <restart>Recommencer</restart>
-        <restart_ad>Continuer</restart_ad>
+        <restartad>Continuer</restartad>
         <highscore>Meilleur score</highscore>
         <easy>Lent</easy>
         <normal>Normal</normal>
@@ -17,6 +17,9 @@
         <buy>Acheter</buy>
         <select>Choisir</select>
         <selected>Choisi</selected>
+        <levelclear>Niveau terminé</levelclear>
+        <resume>Reprendre</resume>
+        <quit>Quitter</quit>
     </language>
     <language>
         <name>English</name>
@@ -24,7 +27,7 @@
         <settings>Settings</settings>
         <characters>Avatar</characters>
         <restart>Restart</restart>
-        <restart_ad>Continue</restart_ad>
+        <restartad>Continue</restartad>
         <highscore>High score</highscore>
         <easy>Slow</easy>
         <normal>Normal</normal>
@@ -34,5 +37,8 @@
         <buy>Buy</buy>
         <select>Select</select>
         <selected>Selected</selected>
+        <levelclear>Level clear</levelclear>
+        <resume>Resume</resume>
+        <quit>Quit</quit>
     </language>
 </languages>

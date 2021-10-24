@@ -5,7 +5,7 @@ using System.Xml;
 
 public class Languages : MonoBehaviour
 {
-    public TextAsset dictionnary;
+    private TextAsset dictionnary;
     List<Dictionary<string, string>> languages = new List<Dictionary<string, string>>();
     Dictionary<string, string> obj;
 
@@ -22,6 +22,10 @@ public class Languages : MonoBehaviour
     private string buy;
     private string select;
     private string selected;
+    private string levelClear;
+    private string restartAd;
+    private string resume;
+    private string quit;
 
     private void Awake() {
         ReadXmlLanguageDoc();
@@ -43,9 +47,14 @@ public class Languages : MonoBehaviour
         languages[currentLanguage].TryGetValue("buy", out buy);
         languages[currentLanguage].TryGetValue("select", out select);
         languages[currentLanguage].TryGetValue("selected", out selected);
+        languages[currentLanguage].TryGetValue("levelclear", out levelClear);
+        languages[currentLanguage].TryGetValue("restartad", out restartAd);
+        languages[currentLanguage].TryGetValue("resume", out resume);
+        languages[currentLanguage].TryGetValue("quit", out quit);
     }
     private void ReadXmlLanguageDoc()
     {
+        dictionnary = Resources.Load<TextAsset>(path: "languages");
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(dictionnary.text);
         XmlNodeList languageList = xmlDoc.GetElementsByTagName("language");
@@ -104,4 +113,19 @@ public class Languages : MonoBehaviour
     public string GetSelected(){
         return selected;
     }    
+    public string GetLevelClear(){
+        return levelClear;
+    }
+    public string GetRestartAd(){
+        return restartAd;
+    }
+    public string GetResume()
+    {
+        return resume;
+    }
+    public string GetQuit()
+    {
+        return quit;
+    }
+
 }

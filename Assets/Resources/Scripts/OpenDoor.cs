@@ -33,6 +33,7 @@ public class OpenDoor : MonoBehaviour
     public void OpenTheDoor()
     {
         closestDoor.GetComponent<Animator>().Play("PorteOpen");
+        closestDoor.GetComponent<AudioSource>().pitch = Random.Range(0.7f,0.9f);
         closestDoor.GetComponent<AudioSource>().Play();
         PlayParticulesDoor();
     }

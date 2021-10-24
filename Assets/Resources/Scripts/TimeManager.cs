@@ -14,10 +14,10 @@ public class TimeManager : MonoBehaviour
     public MultipleGenerator multipleGenerator;
 
     [Header("Slowdown")]
-    private float slowdownFactor = .05f;
+    [SerializeField] private float slowdownFactor = .05f;
     private float slowdownLength = 10f;
-    private bool slowmotionEnable = false;
-    private float slowmotionTime;
+    [SerializeField] private bool slowmotionEnable = false;
+    [SerializeField] private float slowmotionTime;
     private float slowmotionRegular = .02f;
 
     [Header("Countdown")]

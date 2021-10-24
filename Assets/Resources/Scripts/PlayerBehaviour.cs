@@ -81,6 +81,8 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void PlayerDied()
     {
+        GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
+        GetComponent<AudioSource>().Play();
         isDead = true;
         gameOver.StartGameOver();
         rb.constraints = RigidbodyConstraints2D.None;
@@ -91,9 +93,20 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.tag == "EndLevel")
         {
-            // other.GetComponent<AudioSource>().Play();
-            moveSpeed = 1f;
-            endLevel.FinishedLevel();
+            PlayerFinishedLevel(other.gameObject);
         }
+        if (other.gameObject.tag == "Portal")
+        {
+
+            other.GetComponentInChildren<ParticleSystem>().Play();
+            other.GetComponent<AudioSource>().Play();
+            moveSpeed = 5f;
+        }
+    }
+    private void PlayerFinishedLevel(GameObject other)
+    {
+        // other.GetComponent<AudioSource>().Play();
+        moveSpeed = 1f;
+        endLevel.FinishedLevel();
     }
 }
