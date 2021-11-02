@@ -1,5 +1,5 @@
 # MathReflex
-Projet Math & Reflex, jeu android 
+Projet Réflexion, jeu android 
 
 Nom du jeu : Réflexion
 
