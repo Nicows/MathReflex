@@ -52,7 +52,8 @@ public class GameOver : MonoBehaviour
     private void LoadAd()
     {
         
-        rewardedAdsButton.ShowAd();
+        // rewardedAdsButton.ShowAd();
+        ContinueGameWithAd();
     }
     public void RestartGame()
     {

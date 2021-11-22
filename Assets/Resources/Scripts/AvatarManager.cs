@@ -55,8 +55,9 @@ public class AvatarManager : MonoBehaviour
     }
     public void DisplayAd(Button button)
     {
-        rewardedAdsButton.LoadAd();
-        rewardedAdsButton.ShowAd(button);
+        // rewardedAdsButton.LoadAd();
+        // rewardedAdsButton.ShowAd(button);
+        BuyAvatar(button.transform.parent.gameObject);
     }
     public static void BuyAvatar(GameObject avatar)
     {
