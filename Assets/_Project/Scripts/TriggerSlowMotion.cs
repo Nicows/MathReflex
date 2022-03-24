@@ -12,7 +12,7 @@ public class TriggerSlowMotion : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) {
         multipleGenerator.GenerateNumbers();
-        TimeManager.instance.StartSlowmotion();
+        TimeManager.Instance.StartSlowmotion();
         gameObject.SetActive(false);
     }
 }

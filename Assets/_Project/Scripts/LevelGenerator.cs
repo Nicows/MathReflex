@@ -25,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         GenerateStartLevel();
-        ColorManager.RefreshColorDifficultyInAllComponents();
+        ColorManager.Instance.RefreshColorDifficultyInAllComponents();
     }
     private void GenerateStartLevel()
     {
@@ -50,7 +50,7 @@ public class LevelGenerator : MonoBehaviour
             if (Vector3.Distance(player.position, lastEndPosition) < PLAYER_DISTANCE_GENERATE_LEVEL_PART)
             {
                 GenerateLevelPart();
-                ColorManager.RefreshColorDifficultyInAllComponents();
+                ColorManager.Instance.RefreshColorDifficultyInAllComponents();
             }
         }
     }
@@ -64,6 +64,6 @@ public class LevelGenerator : MonoBehaviour
     {
         Transform levelPartTransform = Instantiate(levelEnd, spawnPosition, Quaternion.identity);
         ParticleSystem.MainModule main = levelPartTransform.GetComponentInChildren<ParticleSystem>().main;
-        main.startColor = ColorManager.colorDifficulty;
+        main.startColor = ColorManager.Instance.GetDifficultyColor();
     }
 }

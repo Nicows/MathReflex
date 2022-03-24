@@ -9,7 +9,6 @@ public class MultipleGenerator : MonoBehaviour
     [Header("Scripts")]
     public ScoreManager scoreManager;
     public OpenDoor openDoor;
-    public CameraShake cameraShake;
 
     [Header("Button Pause")]
     public GameObject buttonPause;
@@ -25,15 +24,15 @@ public class MultipleGenerator : MonoBehaviour
     public Image[] shadowsButtonsResult;
 
     [Header("Numbers and results")]
-    private int firstNumber;
-    private int secondNumber;
-    private int result;
-    private int falseResult1;
-    private int falseResult2;
+    private int _firstNumber;
+    private int _secondNumber;
+    private int _result;
+    private int _falseResult1;
+    private int _falseResult2;
 
     [Header("Multiplication tables")]
-    private int multiplicationTableOf; //0 for infinite
-    private int secondNumberForMultiplicationTable = 1;
+    private int _multiplicationTableOf; //0 for infinite
+    private int _secondNumberForMultiplicationTable = 1;
 
     private void Start()
     {
@@ -42,32 +41,31 @@ public class MultipleGenerator : MonoBehaviour
 
     private void GetCurrentMultiplicationTable()
     {
-        multiplicationTableOf = PlayerPrefs.GetInt("Level", 0); //0 for infinite
+        _multiplicationTableOf = PlayerPrefs.GetInt("Level", 0); //0 for infinite
     }
     public void GenerateNumbers()
     {
         if (LevelGenerator.isALevelInfinite)
         {
             Random.InitState(Random.Range(1, 10000));
-            firstNumber = Random.Range(1, 10);
-            secondNumber = Random.Range(1, 10);
+            _firstNumber = Random.Range(1, 10);
+            _secondNumber = Random.Range(1, 10);
         }
         else
         {
-            firstNumber = multiplicationTableOf;
-            secondNumber = secondNumberForMultiplicationTable;
+            _firstNumber = _multiplicationTableOf;
+            _secondNumber = _secondNumberForMultiplicationTable;
         }
-        result = firstNumber * secondNumber;
-        falseResult1 = result - Random.Range(1, 5);
-        falseResult2 = result + Random.Range(1, 5);
-        if (falseResult1 < 0) falseResult1 = 0;
+        _result = _firstNumber * _secondNumber;
+        _falseResult1 = _result - Random.Range(1, 5);
+        _falseResult2 = _result + Random.Range(1, 5);
+        _falseResult1 = (_falseResult1 < 0) ? 0 : _falseResult1;
 
         DisplayResult();
 
         if (!LevelGenerator.isALevelInfinite)
-        {
-            secondNumberForMultiplicationTable++;
-        }
+            _secondNumberForMultiplicationTable++;
+        
     }
     public void DisplayResult()
     {
@@ -75,10 +73,10 @@ public class MultipleGenerator : MonoBehaviour
         EnableButtonsResult(true);
         EnableTextMultiplication(true);
 
-        List<int> allResults = new List<int>() { falseResult1, result, falseResult2 };
+        List<int> allResults = new List<int>() { _falseResult1, _result, _falseResult2 };
         allResults = ShuffleList(allResults);
 
-        textMultiplication.SetText(firstNumber + " x " + secondNumber);
+        textMultiplication.SetText(_firstNumber + " x " + _secondNumber);
         buttonResult1.GetComponentInChildren<TMP_Text>().SetText(allResults[0].ToString());
         buttonResult2.GetComponentInChildren<TMP_Text>().SetText(allResults[1].ToString());
         buttonResult3.GetComponentInChildren<TMP_Text>().SetText(allResults[2].ToString());
@@ -88,15 +86,15 @@ public class MultipleGenerator : MonoBehaviour
         EnableButtonsResult(false);
         EnableTextMultiplication(false);
         EnablePause(true);
-        cameraShake.SetShakeCameraIntensity(5f, 0.1f);
-        TimeManager.instance.StopSlowmotion();
+        CameraShake.Instance.SetShakeCameraIntensity(5f, 0.1f);
+        TimeManager.Instance.StopSlowmotion();
 
         int resultChosen = int.Parse(button.GetComponentInChildren<TMP_Text>().text);
         CheckResult(resultChosen);
     }
     private void CheckResult(int resultChosen)
     {
-        if (resultChosen == result)
+        if (resultChosen == _result)
         {
             openDoor.OpenTheDoor();
             if (LevelGenerator.isALevelInfinite)

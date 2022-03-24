@@ -10,28 +10,27 @@ public class GameOver : MonoBehaviour
     public TMP_Text textScore;
     public TMP_Text textScoreNumber;
     public GameObject gameOverPanel;
-    public Button buttonContinue;
     public Image player;
     
     [Header ("Scripts")]
-    public RewardedAdsButton rewardedAdsButton;
+    // public RewardedAdsButton rewardedAdsButton;
     public ScoreManager scoreManager;
 
     private void Start()
     {
-        ColorManager.ColorShadowsButtons(gameOverPanel);
+        ColorManager.Instance.ColorShadowsButtons(gameOverPanel);
         getPlayerAvatar();
-        rewardedAdsButton.LoadAd();
+        // rewardedAdsButton.LoadAd();
     }
     private void getPlayerAvatar()
     {
         string avatarUsed = PlayerPrefs.GetString("AvatarUsed", "carre");
-        player.sprite = Resources.Load<Sprite>(path: "Images/Reflexion/" + avatarUsed);
+        player.sprite = Resources.Load<Sprite>(path: "Avatars/" + avatarUsed);
     }
     public void StartGameOver()
     {
         if (LevelGenerator.isALevelInfinite) DisplayIfLevelInfinite();
-        TimeManager.instance.StartEndSlowmotion(0.01f, 15f);
+        TimeManager.Instance.StartEndSlowmotion(0.01f, 15f);
         StartCoroutine(WaitBeforeShowGameOver(2f));
     }
     private void DisplayIfLevelInfinite()
@@ -40,20 +39,6 @@ public class GameOver : MonoBehaviour
         textScore.gameObject.SetActive(true);
         textScoreNumber.gameObject.SetActive(true);
         textScoreNumber.text = scoreManager.GetScore().ToString();
-        CheckContinueAd();
-    }
-    public void CheckContinueAd()
-    {
-        if (PlayerPrefs.GetInt("AdAlreadyWatched", 0) == 0)
-        {
-            buttonContinue.gameObject.SetActive(true);
-        }
-    }
-    private void LoadAd()
-    {
-        
-        // rewardedAdsButton.ShowAd();
-        ContinueGameWithAd();
     }
     public void RestartGame()
     {
@@ -68,15 +53,9 @@ public class GameOver : MonoBehaviour
             scoreManager.ResetScore();
         }
         PlayerBehaviour.isDead = false;
-        TimeManager.instance.StopSlowmotion();
+        TimeManager.Instance.StopSlowmotion();
     }
-    public static void ContinueGameWithAd()
-    {
-        PlayerPrefs.SetInt("AdAlreadyWatched", 1);
-        PlayerBehaviour.isDead = false;
-        TimeManager.instance.StopSlowmotion();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    
     IEnumerator WaitBeforeShowGameOver(float secondes)
     {
         yield return new WaitForSecondsRealtime(secondes);

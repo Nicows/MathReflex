@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
     }
     public void Menu(){
-        returnTo.ReturnToMenu();
+        returnTo.Return("Menu");
     }
     public void Quit(){
         Application.Quit();

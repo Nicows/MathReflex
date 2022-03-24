@@ -9,6 +9,7 @@ TagManager:
   - Color
   - EndLevel
   - Portal
+  - Avatar
   layers:
   - Default
   - TransparentFX

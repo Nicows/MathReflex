@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 383480859}
   - component: {fileID: 383480858}
-  - component: {fileID: 383480860}
   m_Layer: 0
   m_Name: Languages
   m_TagString: Untagged
@@ -44,31 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e86c2788b4b3a45bc0bff75489e83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &383480860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383480857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1403c50dada360f4cb9f9f2c1142991d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _textLanguage: {fileID: 0}
-  _textSwitchTo: {fileID: 0}
-  _textPlay: {fileID: 0}
-  _textEasy: {fileID: 0}
-  _textNormal: {fileID: 0}
-  _textHard: {fileID: 0}
-  _textMultipleTable: {fileID: 0}
-  _buttonHighScore: {fileID: 0}
-  _textEasyHighScore: {fileID: 0}
-  _textNormalHighScore: {fileID: 0}
-  _textHardHighScore: {fileID: 0}
-  _textButtonAvatar: {fileID: 0}
-  _textTitrePanelAvatar: {fileID: 0}
 --- !u!1 &7507822966485111588
 GameObject:
   m_ObjectHideFlags: 0
