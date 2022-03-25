@@ -28,6 +28,12 @@ public class TimeManager : Singleton<TimeManager>
         GetStatsFromDifficulty();
         SliderStart();
     }
+    private void OnEnable() {
+        TriggerSlowMotion.OnTriggerSlowMotion += StartSlowmotion;
+    }
+    private void OnDisable() {
+        TriggerSlowMotion.OnTriggerSlowMotion -= StartSlowmotion;
+    }
     private void GetStatsFromDifficulty()
     {
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
@@ -69,7 +75,7 @@ public class TimeManager : Singleton<TimeManager>
             if (Time.unscaledTime >= _slowmotionTime)
             {
                 StopSlowmotion();
-                if (PlayerBehaviour.isDead)
+                if (PlayerBehaviour.IsDead)
                 {
                     returnTo.Return("Menu");
                 }

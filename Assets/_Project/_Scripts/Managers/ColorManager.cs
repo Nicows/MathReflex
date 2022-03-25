@@ -8,7 +8,7 @@ public class ColorManager : StaticInstance<ColorManager>
     private void Start()
     {
         GetDifficultyColor();
-        RefreshColorDifficultyInAllComponents();
+        RefreshColorDifficultyInLevelComponents();
     }
     public Color GetDifficultyColor()
     {
@@ -47,18 +47,24 @@ public class ColorManager : StaticInstance<ColorManager>
         ColorUtility.TryParseHtmlString(colorHex, out var color);
         return color;
     }
-    public void RefreshColorDifficultyInAllComponents()
+    public void RefreshColorDifficultyInLevelComponents()
     {
-        var gameObjects = GameObject.FindGameObjectsWithTag("Color");
-
-        foreach (GameObject gameobject in gameObjects)
+        var gmsNeedColor = GameObject.FindGameObjectsWithTag("Color");
+        
+        foreach (var shadow in gmsNeedColor)
         {
-            if (gameobject.GetComponent<SpriteRenderer>())
-                gameobject.GetComponent<SpriteRenderer>().color = _colorDifficulty;
-            else if (gameobject.GetComponent<Image>())
-                gameobject.GetComponent<Image>().color = _colorDifficulty;
+            if(shadow.TryGetComponent<SpriteRenderer>(out var spriteRenderer)){
+                spriteRenderer.color = _colorDifficulty;
+            }
+            if(shadow.TryGetComponent<Image>(out var image)){
+                image.color = _colorDifficulty;
+            }
+            if(shadow.TryGetComponent<Shadow>(out var shadowComponent)){
+                shadowComponent.effectColor = _colorDifficulty;
+            }
         }
     }
+    
     public void ColorShadowsButtons(GameObject UI)
     {
         var allShadows = UI.GetComponentsInChildren<Shadow>(true);

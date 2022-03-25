@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2266473638425014805}
   - component: {fileID: 2266473638425014804}
   m_Layer: 0
-  m_Name: Character
+  m_Name: Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 2266473639225198391}
   - component: {fileID: 2266473639225198384}
   - component: {fileID: 2266473639225198388}
-  - component: {fileID: 2266473639225198395}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -228,28 +227,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a8c147fd2a88f4a9ed21e5a4a753f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 2266473639225198391}
-  cam: {fileID: 0}
-  gameOver: {fileID: 0}
-  endLevel: {fileID: 0}
-  moveSpeed: 30
-  maxSpeed: 30
---- !u!95 &2266473639225198395
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2266473639225198385}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5befeaad26fc1194d8faef88a8a886ec, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  avatarUsed: {fileID: 2266473638425014806}
+  _audioHurt: {fileID: 8300000, guid: 74a2648d7dda2524994d36e91416b61f, type: 3}

@@ -28,7 +28,7 @@ public class Destroyer : MonoBehaviour
                 _lifetime = 15;
                 break;
         }
-        if (LevelGenerator.isALevelInfinite)
+        if (LevelGenerator.IsALevelInfinite)
             Destroy(gameObject, _lifetime);
     }
 }

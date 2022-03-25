@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 
-
-public class Languages : Singleton<Languages>
+public class Languages : PersistentSingleton<Languages>
 {
     private List<Dictionary<string, string>> LanguagesContents;
     public int CurrentLanguage { get; private set; }

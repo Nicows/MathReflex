@@ -6,11 +6,11 @@ public class ReturnTo : MonoBehaviour
 
     public void ResetGame()
     {
-        if (LevelGenerator.isALevelInfinite){
+        if (LevelGenerator.IsALevelInfinite){
             PlayerPrefs.SetInt("AdAlreadyWatched", 0);
             ScoreManager.Instance.ResetScore();
         }
-        PlayerBehaviour.isDead = false;
+        PlayerBehaviour.IsDead = false;
         TimeManager.Instance.StopSlowmotion();
     }
     public void Return(string from)
