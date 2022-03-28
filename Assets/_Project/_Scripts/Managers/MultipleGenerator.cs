@@ -45,8 +45,14 @@ public class MultipleGenerator : MonoBehaviour
         }
     }
 
-    private void OnEnable() => TriggerSlowMotion.OnTriggerSlowMotion += GenerateNumbers;
-    private void OnDisable() => TriggerSlowMotion.OnTriggerSlowMotion -= GenerateNumbers;
+    private void OnEnable(){
+        TriggerSlowMotion.OnTriggerSlowMotion += GenerateNumbers;
+        TimeManager.OnEnableButtonResult += EnableButtonsResult;
+    }
+    private void OnDisable() {
+        TriggerSlowMotion.OnTriggerSlowMotion -= GenerateNumbers;
+        TimeManager.OnEnableButtonResult -= EnableButtonsResult;
+    }
 
     private void GetCurrentMultiplicationTable() => _multiplicationTableOf = PlayerPrefs.GetInt("Level", 0); //0 for infinite
     

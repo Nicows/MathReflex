@@ -1,21 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
+using System;
 
-public class Languages : PersistentSingleton<Languages>
+public class Languages : Singleton<Languages>
 {
     private List<Dictionary<string, string>> LanguagesContents;
-    public int CurrentLanguage { get; private set; }
+    private int CurrentLanguage;
 
+    public static event Action OnLanguageChanged;
+    
     protected override void Awake()
     {
         base.Awake();
-        LanguagesContents = new List<Dictionary<string, string>>();
         ReadXmlLanguageDoc();
+        CurrentLanguage = PlayerPrefs.GetInt("Language", 0);
     }
 
     private void ReadXmlLanguageDoc()
     {
+        LanguagesContents = new List<Dictionary<string, string>>();
         var dictionnary = Resources.Load<TextAsset>(path: "languages");
         var xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(dictionnary.text);
@@ -37,6 +41,7 @@ public class Languages : PersistentSingleton<Languages>
     {
         PlayerPrefs.SetInt("Language", language);
         CurrentLanguage = language;
+        OnLanguageChanged?.Invoke();
     }
     public string GetCurrentLanguageName()
     {

@@ -17,9 +17,12 @@
         <buy>Acheter</buy>
         <select>Choisir</select>
         <selected>Choisi</selected>
+        <change>Changer</change>
         <levelclear>Niveau terminé</levelclear>
         <resume>Reprendre</resume>
         <quit>Quitter</quit>
+        <start>Toucher pour commencer</start>
+        <tablestart>Table de</tablestart>
     </language>
     <language>
         <name>English</name>
@@ -37,8 +40,11 @@
         <buy>Buy</buy>
         <select>Select</select>
         <selected>Selected</selected>
+        <change>Change</change>
         <levelclear>Level clear</levelclear>
         <resume>Resume</resume>
         <quit>Quit</quit>
+        <start>Touch to start</start>
+        <tablestart>Table of</tablestart>
     </language>
 </languages>

@@ -1,34 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Destroyer : MonoBehaviour
 {
-    [SerializeField] private float _lifetime = 15;
+    [SerializeField] private float _maxDistance = 35f;
 
-    void Start()
+    private void Update() => DestroyAfterDistance();
+
+    private void DestroyAfterDistance()
     {
-        LifetimeOverDifficulty();
-    }
-    private void LifetimeOverDifficulty()
-    {
-        string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-        switch (currentDifficulty)
-        {
-            case "Easy":
-                _lifetime = 15;
-                break;
-            case "Normal":
-                _lifetime = 10;
-                break;
-            case "Hard":
-                _lifetime = 6;
-                break;
-            default:
-                _lifetime = 15;
-                break;
-        }
-        if (LevelGenerator.IsALevelInfinite)
-            Destroy(gameObject, _lifetime);
+        if(!LevelGenerator.IsALevelInfinite) return;
+        if (Vector3.Distance(transform.position, Helpers.PlayerTransform.position) > _maxDistance)
+            Destroy(gameObject);
     }
 }

@@ -11,7 +11,6 @@ public class EndLevel : MonoBehaviour
     [SerializeField] private GameObject _endLevelUI;
     [SerializeField] private Button _buttonRetryLevel;
     [SerializeField] private Button _buttonNextLevel;
-    [SerializeField] private ReturnTo _returnTo;
 
     private void Start() => ColorManager.Instance.ColorShadowsButtons(_endLevelUI);
     private void OnEnable() => PlayerBehaviour.OnPlayerWin += FinishedLevel;
@@ -28,6 +27,8 @@ public class EndLevel : MonoBehaviour
     {
         yield return new WaitForSeconds(secondes);
         _endLevelUI.SetActive(true);
+        yield return new WaitForSeconds(15f);
+        ReturnTo.Return("Menu");
     }
     private void CheckLevelCompleted()
     {
@@ -42,7 +43,7 @@ public class EndLevel : MonoBehaviour
     }
     public void LoadNextLevel()
     {
-        if (_nextLevel == 11) _returnTo.Return("Tables");
+        if (_nextLevel == 11) ReturnTo.Return("Tables");
         else
         {
             PlayerPrefs.SetInt("Level", _nextLevel);

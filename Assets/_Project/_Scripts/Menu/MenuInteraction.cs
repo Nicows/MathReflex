@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
-using System.Collections;
 
 public class MenuInteraction : MonoBehaviour
 {
@@ -27,22 +26,6 @@ public class MenuInteraction : MonoBehaviour
     [Header("Music")]
     [SerializeField] private TextMeshProUGUI _textMusicState;
 
-    private float _blendSpeed = 100f;
-
-    [Header("Animation")]
-    [SerializeField] private Animator _animatorGroupPlay;
-    private bool _isPlayOpen = false;
-    private bool _blendPlayFinished = true;
-
-    [SerializeField] private Animator _animatorGroupHighScore;
-    private bool _isHighScoreOpen = false;
-    private bool _blendHighScoreFinished = true;
-
-    [SerializeField] private Animator _animatorGroupAvatar;
-    private bool _isAvatarOpen = false;
-    private bool _blendAvatarFinished = true;
-
-
     private void Start()
     {
         AddAllLevels();
@@ -50,7 +33,6 @@ public class MenuInteraction : MonoBehaviour
         ReturnedFrom();
         LoadMusicState();
     }
-
 
     private void AddAllLevels()
     {
@@ -161,72 +143,4 @@ public class MenuInteraction : MonoBehaviour
         LoadMusicState();
     }
 
-    private IEnumerator BlendPlayAnimator(bool isOpen)
-    {
-        var blendObjectif = isOpen ? .99f : 2f;
-        _blendPlayFinished = false;
-        var iteration = 1 / _blendSpeed;
-        var currentBlend = _animatorGroupPlay.GetFloat("Blend");
-        currentBlend = (currentBlend < 0.8f) ? .99f : currentBlend;
-        for (float blend = currentBlend; BlendConditionOption(blend, blendObjectif, isOpen); blend = BlendIncrementOption(blend, iteration, isOpen))
-        {
-            _animatorGroupPlay.SetFloat("Blend", blend);
-            yield return null;
-        }
-
-        _blendPlayFinished = true;
-        _isPlayOpen = !isOpen;
-    }
-    private IEnumerator BlendHighScoreAnimator(bool isOpen)
-    {
-        var blendObjectif = isOpen ? .99f : 2f;
-        _blendHighScoreFinished = false;
-        var iteration = 1 / _blendSpeed;
-        var currentBlend = _animatorGroupHighScore.GetFloat("Blend");
-        currentBlend = (currentBlend < 0.8f) ? .99f : currentBlend;
-
-        for (float blend = currentBlend; BlendConditionOption(blend, blendObjectif, isOpen); blend = BlendIncrementOption(blend, iteration, isOpen))
-        {
-            _animatorGroupHighScore.SetFloat("Blend", blend);
-            yield return null;
-        }
-
-        _blendHighScoreFinished = true;
-        _isHighScoreOpen = !isOpen;
-    }
-    private IEnumerator BlendAvatarAnimator(bool isOpen)
-    {
-        var blendObjectif = isOpen ? .99f : 2f;
-        _blendAvatarFinished = false;
-        var iteration = 1 / _blendSpeed;
-        var currentBlend = _animatorGroupAvatar.GetFloat("Blend");
-        currentBlend = (currentBlend < 0.8f) ? .99f : currentBlend;
-
-        for (float blend = currentBlend; BlendConditionOption(blend, blendObjectif, isOpen); blend = BlendIncrementOption(blend, iteration, isOpen))
-        {
-            _animatorGroupAvatar.SetFloat("Blend", blend);
-            yield return null;
-        }
-
-        _blendAvatarFinished = true;
-        _isAvatarOpen = !isOpen;
-    }
-    private float BlendIncrementOption(float blend, float minus, bool isOpen) => isOpen ? blend -= minus : blend += minus;
-    private bool BlendConditionOption(float blend, float blendObjectif, bool isOpen) => isOpen ? blend >= blendObjectif : blend <= blendObjectif;
-
-    public void AnimationPlayButton()
-    {
-        if (!_blendPlayFinished) return;
-        StartCoroutine(BlendPlayAnimator(_isPlayOpen));
-    }
-    public void AnimationHighScore()
-    {
-        if (!_blendHighScoreFinished) return;
-        StartCoroutine(BlendHighScoreAnimator(_isHighScoreOpen));
-    }
-    public void AnimationAvatarButton()
-    {
-        if (!_blendAvatarFinished) return;
-        StartCoroutine(BlendAvatarAnimator(_isAvatarOpen));
-    }
 }

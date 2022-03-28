@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +5,6 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private Button _buttonPause;
     [SerializeField] private GameObject _pauseMenuUi;
-    [SerializeField] private ReturnTo _returnTo;
 
     private void OnEnable() {
         MultipleGenerator.OnEnableButtonPause += EnableButtonPause;
@@ -22,15 +20,9 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    private void DisableButtonPause()
-    {
-        _buttonPause.interactable = false;
-    }
+    private void DisableButtonPause() => _buttonPause.interactable = false;
 
-    private void EnableButtonPause()
-    {
-        _buttonPause.interactable = true;
-    }
+    private void EnableButtonPause() => _buttonPause.interactable = true;
 
     public void Resume(){
         _pauseMenuUi.SetActive(false);
@@ -40,11 +32,7 @@ public class PauseMenu : MonoBehaviour
         _pauseMenuUi.SetActive(true);
         Time.timeScale = 0f;
     }
-    public void Menu(){
-        _returnTo.Return("Menu");
-    }
-    public void Quit(){
-        Application.Quit();
-    }
-    
+    public void Menu() => ReturnTo.Return("Menu");
+    public void Quit() => Application.Quit();
+
 }

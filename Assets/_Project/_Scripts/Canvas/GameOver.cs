@@ -46,11 +46,7 @@ public class GameOver : MonoBehaviour
     private void ResetGame()
     {
         if (LevelGenerator.IsALevelInfinite)
-        {
-            PlayerPrefs.SetInt("AdAlreadyWatched", 0);
             ScoreManager.Instance.ResetScore();
-        }
-        PlayerBehaviour.IsDead = false;
         TimeManager.Instance.StopSlowmotion();
     }
     
@@ -59,6 +55,8 @@ public class GameOver : MonoBehaviour
         yield return new WaitForSecondsRealtime(secondes);
         _gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(10f);
+        ReturnTo.Return("Menu");
     }
 
 }

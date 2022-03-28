@@ -37,14 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\_Project\_Scripts\Canvas\SetLanguageLevel.cs" />
-     <Compile Include="Assets\_Project\_Scripts\Ads\InterstitialAd.cs" />
-     <Compile Include="Assets\_Project\_Scripts\Ads\AdManager.cs" />
      <Compile Include="Assets\_Project\_Scripts\Managers\CameraShake.cs" />
      <Compile Include="Assets\_Project\_Scripts\Systems\Systems.cs" />
      <Compile Include="Assets\_Project\_Scripts\TriggerSlowMotion.cs" />
      <Compile Include="Assets\_Project\_Scripts\Systems\Languages.cs" />
-     <Compile Include="Assets\_Project\_Scripts\Ads\AdsInitializer.cs" />
-     <Compile Include="Assets\_Project\_Scripts\Ads\RewardedAdsButton.cs" />
      <Compile Include="Assets\_Project\_Scripts\Managers\AvatarManager.cs" />
      <Compile Include="Assets\_Project\_Scripts\Managers\TimeManager.cs" />
      <Compile Include="Assets\_Project\_Scripts\Canvas\PauseMenu.cs" />
@@ -67,6 +63,7 @@
      <Compile Include="Assets\_Project\_Scripts\Utilities\StaticInstance.cs" />
      <Compile Include="Assets\_Project\_Scripts\OpenDoor.cs" />
      <Compile Include="Assets\_Project\_Scripts\SwipeMenu.cs" />
+     <Compile Include="Assets\_Project\_Scripts\AnimationOpen.cs" />
      <None Include="Assets\Packages\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Packages\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Packages\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -674,9 +671,6 @@
     <Reference Include="Unity.TextMeshPro">
         <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-        <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.2D.IK.Editor">
         <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
     </Reference>
@@ -737,9 +731,6 @@
     <Reference Include="Unity.Mathematics.Editor">
         <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Monetization">
-        <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.2D.Common.Runtime">
         <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
@@ -748,9 +739,6 @@
     </Reference>
     <Reference Include="Unity.2D.Common.Editor">
         <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Advertisements.Editor">
-        <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\UnityEngine.Advertisements.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
         <HintPath>C:\Projets\Unity\Reflexion\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>

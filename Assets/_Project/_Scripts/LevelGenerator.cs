@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    private const float PLAYER_DISTANCE_GENERATE_LEVEL_PART = 25f;
+    private const float PLAYER_DISTANCE_GENERATE_LEVEL_PART = 20f;
 
     [SerializeField] private Transform _player;
     [SerializeField] private Transform _levelStart;

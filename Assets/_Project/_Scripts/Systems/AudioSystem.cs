@@ -7,18 +7,21 @@ using UnityEngine;
 public class AudioSystem : PersistentSingleton<AudioSystem>
 {
     [SerializeField] private AudioSource _musicSource;
-    [SerializeField] private AudioSource _soundsSource;
+    // [SerializeField] private AudioSource _soundsSource;
 
     [SerializeField] private AudioClip _musiqueClip;
 
     private void Start() {
-        _musicSource = GetComponents<AudioSource>()[0];
-        _soundsSource = GetComponents<AudioSource>()[1];
+        _musicSource = GetComponent<AudioSource>();
+        // _soundsSource = GetComponents<AudioSource>()[1];
     }
     public void PlayerDefaultMusic()
     {
-        _musicSource.clip = _musiqueClip;
-        _musicSource.Play();
+        if (_musicSource.clip != _musiqueClip)
+        {
+            _musicSource.clip = _musiqueClip;
+            _musicSource.Play();
+        }
     }
 
     public void PlayMusic(AudioClip clip)
@@ -34,17 +37,17 @@ public class AudioSystem : PersistentSingleton<AudioSystem>
     }
 
 
-    public void PlaySound(AudioClip clip, Vector3 pos, float vol = 1, bool randomPitch = false)
-    {
-        _soundsSource.pitch = randomPitch ? Random.Range(0.9f, 1.1f) : 1f;
-        _soundsSource.transform.position = pos;
-        PlaySound(clip, vol);
-    }
+    // public void PlaySound(AudioClip clip, Vector3 pos, float vol = 1, bool randomPitch = false)
+    // {
+    //     _soundsSource.pitch = randomPitch ? Random.Range(0.9f, 1.1f) : 1f;
+    //     _soundsSource.transform.position = pos;
+    //     PlaySound(clip, vol);
+    // }
 
-    public void PlaySound(AudioClip clip, float vol = 1)
-    {
-        _soundsSource.PlayOneShot(clip, vol);
-    }
+    // public void PlaySound(AudioClip clip, float vol = 1)
+    // {
+    //     _soundsSource.PlayOneShot(clip, vol);
+    // }
 
     public void SetMusicByDifficulty()
     {

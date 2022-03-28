@@ -51,18 +51,19 @@ public class ScoreManager : StaticInstance<ScoreManager>
     {
         if (LevelGenerator.IsALevelInfinite)
         {
-            _textScore.gameObject.SetActive(true);
-            _textCombo.gameObject.SetActive(true);
-
-            _score = PlayerPrefs.GetInt("CurrentScore", 0);
+            _score = 0;
+            ActivateTextScore(true);
             _textScore.text = _score.ToString();
-            _textCombo.text = "x" + _comboMultiplier;
+            _textCombo.text = $"x{_comboMultiplier}";
         }
         else
-        {
-            _textScore.gameObject.SetActive(false);
-            _textCombo.gameObject.SetActive(false);
-        }
+            ActivateTextScore(false);
+        
+    }
+    private void ActivateTextScore(bool activate)
+    {
+        _textScore.gameObject.SetActive(activate);
+        _textCombo.gameObject.SetActive(activate);
     }
     public void AddScore()
     {
@@ -75,7 +76,6 @@ public class ScoreManager : StaticInstance<ScoreManager>
 
     public void CalculateHighScore()
     {
-        PlayerPrefs.SetInt("CurrentScore", _score);
         if (_score > PlayerPrefs.GetInt("HighScore_" + _currentDifficulty, 0))
         {
             SetHighScore();
@@ -87,7 +87,7 @@ public class ScoreManager : StaticInstance<ScoreManager>
     {
         _resultsAnswered++;
         checkNextCombo();
-        _textCombo.text = $"x {_comboMultiplier}";
+        _textCombo.text = $"x{_comboMultiplier}";
     }
     private void checkNextCombo()
     {

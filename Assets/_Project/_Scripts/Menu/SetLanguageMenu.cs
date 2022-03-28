@@ -23,7 +23,8 @@ public class SetLanguageMenu : MonoBehaviour
     [Header("Avatar")]
     [SerializeField] private TextMeshProUGUI _textButtonAvatar;
     [SerializeField] private TextMeshProUGUI _textTitrePanelAvatar;
-
+    [SerializeField] private TextMeshProUGUI _textButtonChangeAvatar;
+    
     private void Start()
     {
         DisplayTextOnMenu();
@@ -49,26 +50,26 @@ public class SetLanguageMenu : MonoBehaviour
         Languages.Instance.GetPropriety("characters", out var avatar);
         _textButtonAvatar.text = avatar;
         _textTitrePanelAvatar.text = avatar;
+        _textButtonChangeAvatar.text = Languages.Instance.GetPropriety("change");
 
         _textSwitchTo.text = Languages.Instance.GetPropriety("switch");
-        _textLanguage.text = Languages.Instance.GetCurrentLanguageName();
+        _textLanguage.text = GetInversedLanguage();
 
     }
     public void changeLanguage()
     {
-        int currentLanguage = Languages.Instance.GetCurrentLanguageIndex();
-        switch (currentLanguage)
-        {
-            case 0:
-                Languages.Instance.SetCurrentLanguage(1);
-                _textLanguage.text = Languages.Instance.GetCurrentLanguageName();
-                break;
-            case 1:
-                Languages.Instance.SetCurrentLanguage(0);
-                _textLanguage.text = Languages.Instance.GetCurrentLanguageName();
-                break;
-        }
+        var currentLanguage = Languages.Instance.GetCurrentLanguageIndex();
+        if(currentLanguage == 0)
+            Languages.Instance.SetCurrentLanguage(1);
+        else
+            Languages.Instance.SetCurrentLanguage(0);
+        
         DisplayTextOnMenu();
+    }
+    private string GetInversedLanguage()
+    {
+        var currentLanguage = Languages.Instance.GetCurrentLanguageIndex();
+        return (currentLanguage == 0) ? "English" : "Français";
     }
 
 }

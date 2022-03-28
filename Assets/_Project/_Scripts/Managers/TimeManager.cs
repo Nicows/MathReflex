@@ -1,15 +1,14 @@
+using System;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
 
 public class TimeManager : Singleton<TimeManager>
 {
     [Header("Components")]
-    public GameObject buttonPause;
-    public Slider sliderCountDown;
-    public ReturnTo returnTo;
-    public MultipleGenerator multipleGenerator;
+    [SerializeField] private Slider _sliderCountDown;
+
+    public static event EnableButtonResult OnEnableButtonResult;
+    public delegate void EnableButtonResult(bool boolean);
 
     [Header("Slowdown")]
     private float _slowdownFactor = .05f;
@@ -23,20 +22,18 @@ public class TimeManager : Singleton<TimeManager>
     private bool _countdownEnable = false;
     private float _countDownTime;
 
+    public float _slowmotionLength { get; private set; }
+
     private void Start()
     {
         GetStatsFromDifficulty();
         SliderStart();
     }
-    private void OnEnable() {
-        TriggerSlowMotion.OnTriggerSlowMotion += StartSlowmotion;
-    }
-    private void OnDisable() {
-        TriggerSlowMotion.OnTriggerSlowMotion -= StartSlowmotion;
-    }
+    private void OnEnable() => TriggerSlowMotion.OnTriggerSlowMotion += StartSlowmotion;
+    private void OnDisable() => TriggerSlowMotion.OnTriggerSlowMotion -= StartSlowmotion;
     private void GetStatsFromDifficulty()
     {
-        string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
+        var currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
         switch (currentDifficulty)
         {
             case "Easy":
@@ -54,17 +51,18 @@ public class TimeManager : Singleton<TimeManager>
                 _slowdownLength = 2;
                 _slowdownFactor = .045f;
                 break;
-            default: break;
         }
     }
     private void SliderStart()
     {
-        sliderCountDown.maxValue = _startCountDownAt;
-        sliderCountDown.GetComponentInChildren<Image>().color = ColorManager.Instance.GetDifficultyColor();
-        sliderCountDown.gameObject.SetActive(false);
+        _sliderCountDown.maxValue = _startCountDownAt;
+        _sliderCountDown.GetComponentInChildren<Image>().color = ColorManager.Instance.GetDifficultyColor();
+        _sliderCountDown.gameObject.SetActive(false);
     }
     private void Update()
     {
+        if(!_slowmotionEnable)
+            return;
         SlowmotionEnable();
         CountdownEnable();
     }
@@ -75,10 +73,6 @@ public class TimeManager : Singleton<TimeManager>
             if (Time.unscaledTime >= _slowmotionTime)
             {
                 StopSlowmotion();
-                if (PlayerBehaviour.IsDead)
-                {
-                    returnTo.Return("Menu");
-                }
             }
         }
     }
@@ -89,7 +83,7 @@ public class TimeManager : Singleton<TimeManager>
             if (_countDownTime > 0)
             {
                 _countDownTime -= 1f * Time.unscaledDeltaTime;
-                sliderCountDown.value = _countDownTime;
+                _sliderCountDown.value = _countDownTime;
             }
         }
     }
@@ -108,20 +102,19 @@ public class TimeManager : Singleton<TimeManager>
         _slowmotionEnable = false;
         _slowmotionTime = 0;
         StopCountdown();
-        buttonPause.gameObject.SetActive(true);
-        multipleGenerator.EnableButtonsResult(false);
+        OnEnableButtonResult?.Invoke(false);
     }
     private void StartCountdown()
     {
         _countDownTime = _startCountDownAt;
         _countdownEnable = true;
-        sliderCountDown.gameObject.SetActive(true);
+        _sliderCountDown.gameObject.SetActive(true);
     }
     private void StopCountdown()
     {
         _countdownEnable = false;
         _countDownTime = 0;
-        sliderCountDown.gameObject.SetActive(false);
+        _sliderCountDown.gameObject.SetActive(false);
     }
     public void StartEndSlowmotion(float slowdownFactor, float slowmotionLength)
     {
