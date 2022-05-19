@@ -69,7 +69,7 @@ public class SetLanguageMenu : MonoBehaviour
     private string GetInversedLanguage()
     {
         var currentLanguage = Languages.Instance.GetCurrentLanguageIndex();
-        return (currentLanguage == 0) ? "English" : "Français";
+        return (currentLanguage is 0) ? "English" : "Français";
     }
 
 }

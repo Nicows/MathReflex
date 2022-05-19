@@ -21,10 +21,8 @@ public class SetLanguageLevel : MonoBehaviour
         textQuit.text = Languages.Instance.GetPropriety("quit");
         textStart.text = Languages.Instance.GetPropriety("start");
         var currentTable = PlayerPrefs.GetInt("Level", 0);
-        if (currentTable == 0)
-            textTables.text = "Infini";
-        else
-            textTables.text = Languages.Instance.GetPropriety("tablestart") + " " + (currentTable);
+
+        textTables.text = currentTable == 0 ? "Infini" : Languages.Instance.GetPropriety("tablestart") + " " + (currentTable);
     }
 
 }

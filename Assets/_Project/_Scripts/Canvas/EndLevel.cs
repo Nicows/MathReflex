@@ -34,16 +34,13 @@ public class EndLevel : MonoBehaviour
     {
         _levelnumber = PlayerPrefs.GetInt("Level", 0);
         string currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-        if (PlayerPrefs.GetInt("Completed_" + currentDifficulty + "_" + _levelnumber, 0) == 0)
+        if (PlayerPrefs.GetInt("Completed_" + currentDifficulty + "_" + _levelnumber, 0) is 0)
             PlayerPrefs.SetInt("Completed_" + currentDifficulty + "_" + _levelnumber, 1);
     }
-    public void RetryLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    public void RetryLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     public void LoadNextLevel()
     {
-        if (_nextLevel == 11) ReturnTo.Return("Tables");
+        if (_nextLevel is 11) ReturnTo.Return("Tables");
         else
         {
             PlayerPrefs.SetInt("Level", _nextLevel);

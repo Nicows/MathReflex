@@ -29,8 +29,16 @@ public class TimeManager : Singleton<TimeManager>
         GetStatsFromDifficulty();
         SliderStart();
     }
-    private void OnEnable() => TriggerSlowMotion.OnTriggerSlowMotion += StartSlowmotion;
-    private void OnDisable() => TriggerSlowMotion.OnTriggerSlowMotion -= StartSlowmotion;
+    private void OnEnable()
+    {
+        TriggerSlowMotion.OnTriggerSlowMotion += StartSlowmotion;
+        MultipleGenerator.OnResultSelected += StopSlowmotion;
+    }
+    private void OnDisable()
+    {
+        TriggerSlowMotion.OnTriggerSlowMotion -= StartSlowmotion;
+        MultipleGenerator.OnResultSelected -= StopSlowmotion;
+    }
     private void GetStatsFromDifficulty()
     {
         var currentDifficulty = PlayerPrefs.GetString("Difficulty", "Easy");
@@ -61,7 +69,7 @@ public class TimeManager : Singleton<TimeManager>
     }
     private void Update()
     {
-        if(!_slowmotionEnable)
+        if (_slowmotionEnable is false)
             return;
         SlowmotionEnable();
         CountdownEnable();

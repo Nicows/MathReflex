@@ -28,9 +28,11 @@ public class MultipleGenerator : MonoBehaviour
     private int _secondNumberForMultiplicationTable = 1;
 
     public static event System.Action OnTriggerOpenDoor;
-    public static event System.Action OnAddScore;
-    public static event System.Action OnEnableButtonPause;
-    public static event System.Action OnDisableButtonPause;
+    public static event System.Action OnResultSelected;
+
+    //event to check the answer
+    public static event System.Action<bool> OnIsAnswerCorrect;
+    public static event System.Action OnDisplayResults;
 
     private void Start(){
         GetCurrentMultiplicationTable();
@@ -82,7 +84,7 @@ public class MultipleGenerator : MonoBehaviour
     }
     public void DisplayResult()
     {
-        OnDisableButtonPause?.Invoke();
+        OnDisplayResults?.Invoke();
         EnableButtonsResult(true);
         EnableTextMultiplication(true);
 
@@ -96,23 +98,20 @@ public class MultipleGenerator : MonoBehaviour
     }
     public void SelectResult(Button button)
     {
+        OnResultSelected?.Invoke();
+        CameraShake.Instance.SetShakeCameraIntensity(5f, 0.1f);
         EnableButtonsResult(false);
         EnableTextMultiplication(false);
-        OnEnableButtonPause?.Invoke();
-        CameraShake.Instance.SetShakeCameraIntensity(5f, 0.1f);
-        TimeManager.Instance.StopSlowmotion();
 
         var resultChosen = int.Parse(button.GetComponentInChildren<TMP_Text>().text);
         CheckResult(resultChosen);
     }
     private void CheckResult(int resultChosen)
     {
-        if (resultChosen == _result)
-        {
+        bool isCorrect = resultChosen == _result;
+        OnIsAnswerCorrect?.Invoke(isCorrect);
+        if (isCorrect)
             OnTriggerOpenDoor?.Invoke();
-            if (LevelGenerator.IsALevelInfinite)
-                OnAddScore?.Invoke();
-        }
     }
     
     private List<int> ShuffleList(List<int> myList)
@@ -127,14 +126,12 @@ public class MultipleGenerator : MonoBehaviour
         }
         return myList;
     }
-    private void EnableTextMultiplication(bool enable)
-    {
-        _textMultiplication.gameObject.SetActive(enable);
-    }
+    private void EnableTextMultiplication(bool enable) => _textMultiplication.gameObject.SetActive(enable);
 
     public void EnableButtonsResult(bool enable)
     {
         _groupButtonsResult.SetActive(enable);
+        
         foreach (Image shadowButton in _shadowsButtonsResult)
         {
             shadowButton.enabled = enable;

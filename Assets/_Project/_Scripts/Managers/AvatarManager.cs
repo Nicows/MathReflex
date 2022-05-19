@@ -23,16 +23,12 @@ public class AvatarManager : MonoBehaviour
         GetAvatarWhenFirstStart();
         RefreshAvatar();
     }
-    private void OnEnable()
-    {
-        Languages.OnLanguageChanged += RefreshAvatar;
-    }
-    private void OnDisable()
-    {
-        Languages.OnLanguageChanged -= RefreshAvatar;
-    }
+    private void OnEnable() => Languages.OnLanguageChanged += RefreshAvatar;
+    private void OnDisable() => Languages.OnLanguageChanged -= RefreshAvatar;
+
     private void GetAvatarWhenFirstStart()
     {
+        
         var avatar = PlayerPrefs.GetString("AvatarUsed", "");
         //Début du jeu lorsqu'on a aucun avatar
         if (avatar == "")
@@ -44,6 +40,7 @@ public class AvatarManager : MonoBehaviour
 
     private void RefreshAvatar()
     {
+
         var avatarUsed = PlayerPrefs.GetString("AvatarUsed", "");
         foreach (Transform avatar in _groupOfAvatarsShop.transform)
         {

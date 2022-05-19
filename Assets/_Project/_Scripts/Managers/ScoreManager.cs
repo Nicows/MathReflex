@@ -23,8 +23,12 @@ public class ScoreManager : StaticInstance<ScoreManager>
         GetComboFromDifficulty();
         DisplayTextIfInfinite();
     }
-    private void OnEnable() => MultipleGenerator.OnAddScore += AddScore;
-    private void OnDisable() => MultipleGenerator.OnAddScore -= AddScore;
+    private void OnEnable(){
+        if(LevelGenerator.IsALevelInfinite) MultipleGenerator.OnTriggerOpenDoor += AddScore;
+    }
+    private void OnDisable() {
+        if(LevelGenerator.IsALevelInfinite) MultipleGenerator.OnTriggerOpenDoor -= AddScore;
+    }
 
     private void GetComboFromDifficulty()
     {
@@ -89,6 +93,7 @@ public class ScoreManager : StaticInstance<ScoreManager>
         checkNextCombo();
         _textCombo.text = $"x{_comboMultiplier}";
     }
+
     private void checkNextCombo()
     {
         if (_resultsAnswered < _nextComboAt) return;

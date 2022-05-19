@@ -18,35 +18,20 @@ public class ColorManager : StaticInstance<ColorManager>
     }
     public Color GetColor(string colorString)
     {
-        var colorHex = "#000000";
-        switch (colorString)
-        {
-            case "Easy":
-                colorHex = "#6EC6BA";
-                break;
-            case "Normal":
-                colorHex = "#55C5FA";
-                break;
-            case "Hard":
-                colorHex = "#DD3829";
-                break;
-            case "EasyCompleted":
-                colorHex = "#47827A";
-                break;
-            case "NormalCompleted":
-                colorHex = "#3F8EB3";
-                break;
-            case "HardCompleted":
-                colorHex = "#A42318";
-                break;
-            default:
-                colorHex = "#6EC6BA";
-                break;
-        }
-
+        var colorHex = ColorFromDifficulty(colorString);
         ColorUtility.TryParseHtmlString(colorHex, out var color);
         return color;
     }
+    private string ColorFromDifficulty(string difficulty) => difficulty switch
+    {
+        "Easy" => "#6EC6BA",
+        "Normal" => "#55C5FA",
+        "Hard" => "#DD3829",
+        "EasyCompleted" => "#47827A",
+        "NormalCompleted" => "#3F8EB3",
+        "HardCompleted" => "#A42318",
+        _ => "#6EC6BA"
+    };
     public void RefreshColorDifficultyInLevelComponents()
     {
         var gmsNeedColor = GameObject.FindGameObjectsWithTag("Color");
